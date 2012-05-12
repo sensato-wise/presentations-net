@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{676396C6-45BA-4B93-B4DF-E52B6B414531}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebPresentation", "WebPresentation\WebPresentation.csproj", "{F1CB931C-778D-4C53-8367-A0EC48E127EB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{B62F2D4F-E9A1-44D4-851B-CB0ED025B50B}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F1CB931C-778D-4C53-8367-A0EC48E127EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1CB931C-778D-4C53-8367-A0EC48E127EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F1CB931C-778D-4C53-8367-A0EC48E127EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F1CB931C-778D-4C53-8367-A0EC48E127EB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B62F2D4F-E9A1-44D4-851B-CB0ED025B50B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B62F2D4F-E9A1-44D4-851B-CB0ED025B50B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B62F2D4F-E9A1-44D4-851B-CB0ED025B50B}.Release|Any CPU.ActiveCfg = Release|Any CPU
