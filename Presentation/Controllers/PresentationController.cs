@@ -7,19 +7,35 @@ using System.Web;
 using System.Web.Mvc;
 using Presentation.Models;
 using Presentation.Model;
+using Presentation.DAL;
 
 namespace Presentation.Controllers
 { 
     public class PresentationController : Controller
     {
-        private UserContext db = new UserContext();
+
+        private IPresentationRepository repository;
+
+
+        public PresentationController()
+        {
+            this.repository = new 
+                PresentationRepository(new UserContext());
+        }
 
         //
         // GET: /Presentation/
 
         public ViewResult Index()
         {
-            return View(db.Presentation.ToList());
+            if (Request.IsAuthenticated)
+            {
+                Guid userId = repository.GetUserGUID(User.Identity.Name);
+                var presentations = repository.GetPresentations(userId);
+                return View(presentations);
+            }
+            else
+                return View(repository.GetAllPresentations());
         }
 
         //
@@ -27,40 +43,41 @@ namespace Presentation.Controllers
 
         public ViewResult Details(int id)
         {
-            PresentationModel presentationmodel = db.Presentation.Find(id);
-            return View(presentationmodel);
+            var presentation = repository.GetPresentation(id);
+            return View(presentation);
         }
 
         //
         // GET: /Presentation/Create
 
-        public ActionResult Create(int? _id)
+        public ActionResult Create()
         {
-            
-            return View();
+            if (Request.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         //
         // POST: /Presentation/Create
 
         [HttpPost]
-        public ActionResult Create(PresentationModel presentationmodel, int? _id)
+        public ActionResult Create(PresentationModel presentation)
         {
-            
-            int userId = (_id ?? 1);
-            DbSet<User> dbSet = db.Set<User>();
-            var users = dbSet.Where(i => i.UserIntId == userId);
-            var temp = users.ToList();
-            presentationmodel.UserId = temp[0].UserId;
-
-            if (ModelState.IsValid)
+            if (Request.IsAuthenticated)
             {
-                db.Presentation.Add(presentationmodel);
-                db.SaveChanges();
-                return RedirectToAction("Index");  
+                presentation.UserId = repository.GetUserGUID(User.Identity.Name);
+                if (ModelState.IsValid)
+                {
+                    repository.InsertPresentation(presentation);
+                    repository.Save();
+                }
             }
-
-            return View(presentationmodel);
+            return RedirectToAction("Index");
         }
         
         //
@@ -68,23 +85,29 @@ namespace Presentation.Controllers
  
         public ActionResult Edit(int id)
         {
-            PresentationModel presentationmodel = db.Presentation.Find(id);
-            return View(presentationmodel);
+            if (Request.IsAuthenticated)
+            {
+                var presentation = repository.GetPresentation(id);
+                Guid userId = repository.GetUserGUID(User.Identity.Name);
+                if(userId.Equals(presentation.UserId))
+                    return View(presentation);
+            }
+            return RedirectToAction("Index");
         }
 
         //
         // POST: /Presentation/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(PresentationModel presentationmodel)
+        public ActionResult Edit(PresentationModel presentation)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(presentationmodel).State = EntityState.Modified;
-                db.SaveChanges();
+                repository.UpdatePresentation(presentation);
+                repository.Save();
                 return RedirectToAction("Index");
             }
-            return View(presentationmodel);
+            return View(presentation);
         }
 
         //
@@ -92,8 +115,15 @@ namespace Presentation.Controllers
  
         public ActionResult Delete(int id)
         {
-            PresentationModel presentationmodel = db.Presentation.Find(id);
-            return View(presentationmodel);
+            if (Request.IsAuthenticated)
+            {
+
+                var presentation = repository.GetPresentation(id);
+                Guid userId = repository.GetUserGUID(User.Identity.Name);
+                if (userId.Equals(presentation.UserId))
+                    return View(presentation);
+            }
+            return RedirectToAction("Index");
         }
 
         //
@@ -101,16 +131,15 @@ namespace Presentation.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
-        {            
-            PresentationModel presentationmodel = db.Presentation.Find(id);
-            db.Presentation.Remove(presentationmodel);
-            db.SaveChanges();
+        {
+            repository.DeletePresentation(id);
+            repository.Save();
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+            repository.Dispose();
             base.Dispose(disposing);
         }
     }
