@@ -13,14 +13,8 @@
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>PresentationModel</legend>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserId)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.UserId)
-            @Html.ValidationMessageFor(model => model.UserId)
-        </div>
+        
+        <code> model => model.UserId</code>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)

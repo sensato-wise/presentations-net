@@ -19,6 +19,10 @@ namespace Presentation.Models
         [Column("UserName")]
         public string Name { get; set; }
 
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        [Column("UserIntId")]
+        public int UserIntId { get; set; }
+
         //[ForeignKey("UserId")]
         //public virtual UserDetails UserDetails { get; set; }
 

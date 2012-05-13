@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using Presentation.Models;
 using Presentation.Model;
+using System.Web.Security;
 
 namespace Presentation.Controllers
 { 
@@ -32,34 +33,13 @@ namespace Presentation.Controllers
             return View(user);
         }
 
-        //
-        // GET: /User/Create
 
-        public ActionResult Create()
-        {
-            return View();
-        } 
-
-        //
-        // POST: /User/Create
-
-        [HttpPost]
-        public ActionResult Create(User user)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Users.Add(user);
-                db.SaveChanges();
-                return RedirectToAction("Index");  
-            }
-
-            return View(user);
-        }
+        
         
         //
         // GET: /User/Edit/5
- 
-        public ActionResult Edit(int id)
+
+        public ActionResult Edit(Guid id)
         {
             User user = db.Users.Find(id);
             return View(user);
@@ -70,7 +50,7 @@ namespace Presentation.Controllers
 
         [HttpPost]
         public ActionResult Edit(User user)
-        {
+        {     
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
@@ -83,7 +63,7 @@ namespace Presentation.Controllers
         //
         // GET: /User/Delete/5
  
-        public ActionResult Delete(int id)
+        public ActionResult Delete(Guid id)
         {
             User user = db.Users.Find(id);
             return View(user);
@@ -93,11 +73,10 @@ namespace Presentation.Controllers
         // POST: /User/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(Guid id)
         {            
             User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
+            Membership.DeleteUser(user.Name, true);
             return RedirectToAction("Index");
         }
 
