@@ -34,20 +34,27 @@ namespace Presentation.Controllers
         //
         // GET: /Presentation/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int? _id)
         {
+            
             return View();
-        } 
+        }
 
         //
         // POST: /Presentation/Create
 
         [HttpPost]
-        public ActionResult Create(PresentationModel presentationmodel)
+        public ActionResult Create(PresentationModel presentationmodel, int? _id)
         {
+            
+            int userId = (_id ?? 1);
+            DbSet<User> dbSet = db.Set<User>();
+            var users = dbSet.Where(i => i.UserIntId == userId);
+            var temp = users.ToList();
+            presentationmodel.UserId = temp[0].UserId;
+
             if (ModelState.IsValid)
             {
-                
                 db.Presentation.Add(presentationmodel);
                 db.SaveChanges();
                 return RedirectToAction("Index");  
