@@ -67,6 +67,7 @@ namespace Presentation.Controllers
         {
             User user = db.Users.Find(id);
             return View(user);
+            
         }
 
         //

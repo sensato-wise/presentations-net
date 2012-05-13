@@ -252,6 +252,19 @@ div#title {
     text-align: left;
 }
 
+#userPanel
+{
+    margin:2.2em;
+    display: block;
+    float: left;
+    text-align: left;
+}
+
+#userPanel a
+{
+    color:White;
+}
+
 #logindisplay {
     font-size: 1.1em;
     display: block;
