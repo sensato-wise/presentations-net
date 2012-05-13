@@ -9,7 +9,7 @@
     <div class="page">
         <div id="header">
             <div id="title">
-                <h1>My MVC Application</h1>
+                <h1>Presentations-net</h1>
             </div>
             <div id="userPanel">
                  @Html.Partial("_UserPanel")
@@ -18,8 +18,15 @@
                 @Html.Partial("_LogOnPartial")
             </div>
             <div id="menucontainer">
-                <ul id="menu">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <ul id="menu">				
+				@if (Request.IsAuthenticated) {	
+						if (User.IsInRole("Admin") ) {
+							<li>@Html.ActionLink("Admin Dashboard", "../Admin/Dashboard" )</li>
+						}			
+						<li>@Html.ActionLink("My Presentations", "../Presentation/Index" )</li>
+					}
+					<li>@Html.ActionLink("Search", "../Search/Index")</li>
+                    <li>@Html.ActionLink("Start", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                 </ul>
             </div>

@@ -11,17 +11,12 @@ namespace Presentation.Controllers
 {
     public class AccountController : Controller
     {
-        // TestCommit
-        // TestCommit2
-        //
-        // TestCommit4
         // GET: /Account/LogOn
 
         public ActionResult LogOn()
         {
             return View();
         }
-
         //
         // POST: /Account/LogOn
 
@@ -40,7 +35,6 @@ namespace Presentation.Controllers
                     }
                     else
                     {
-                        
                         return RedirectToAction("Index", "Home");
                     }
                 }
@@ -63,7 +57,6 @@ namespace Presentation.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
         //
         // GET: /Account/Register
 
@@ -86,6 +79,9 @@ namespace Presentation.Controllers
 
                 if (createStatus == MembershipCreateStatus.Success)
                 {
+                    string role = "User";
+                    if (model.UserName == "admin") role = "Admin";
+                    Roles.AddUserToRole(model.UserName, role);
                     FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
                     return RedirectToAction("Index", "Home");
                 }
@@ -152,7 +148,6 @@ namespace Presentation.Controllers
         {
             return View();
         }
-
         #region Status Codes
         private static string ErrorCodeToString(MembershipCreateStatus createStatus)
         {
