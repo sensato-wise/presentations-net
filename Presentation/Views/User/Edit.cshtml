@@ -1,4 +1,4 @@
-﻿@model Presentation.Models.User
+﻿@model System.Web.Security.MembershipUser
 
 @{
     ViewBag.Title = "Edit";
@@ -13,18 +13,20 @@
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>User</legend>
-
-        @Html.HiddenFor(model => model.UserId)
-        @Html.HiddenFor(model => model.UserIntId)
-
         <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
+            @Html.LabelFor(model => model.UserName)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Name)
-            @Html.ValidationMessageFor(model => model.Name)
+            @Html.EditorFor(model => model.UserName)
+            @Html.ValidationMessageFor(model => model.UserName)
         </div>
-
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Email)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Email)
+            @Html.ValidationMessageFor(model => model.Email)
+        </div>
         <p>
             <input type="submit" value="Save" />
         </p>

@@ -24,7 +24,12 @@ namespace Presentation
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional} // Parameter defaults
+            );
+            routes.MapRoute(
+                "Start", // Route name
+                "{controller}/{action}/{name}", // URL with parameters
+                new { controller = "Home", action = "Index", name = UrlParameter.Optional} // Parameter defaults
             );
 
         }

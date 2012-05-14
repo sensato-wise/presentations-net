@@ -1,15 +1,15 @@
-﻿@model IEnumerable<Presentation.Models.PresentationModel>
-
+﻿@model IEnumerable<Presentation.Models.PresentationModel> 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Search Results for: </h2>
+<h2>@ViewBag.Message</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table width="100%">
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+
+<table>
     <tr>
         <th>
             UserId
@@ -22,8 +22,7 @@
         </th>
         <th>
             Tags
-        </th>
-        <th></th>
+        </th>        
     </tr>
     
 @foreach (var item in Model) {
@@ -51,5 +50,4 @@
         </td>
     </tr>
 }
-
 </table>

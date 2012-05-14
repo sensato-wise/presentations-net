@@ -1,33 +1,48 @@
-﻿@model IEnumerable<Presentation.Models.User>
+﻿@model System.Web.Security.MembershipUserCollection
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Users information</h2>
 
-<table>
+<table width="100%">
     <tr>
-        <th>
-            Name
-        </th>
-        <th></th>
+        <th>Login</th>
+        <th>E-mail</th>
+		<th>Status</th>
+		<th>Since</th>
+		<th>Last Activity</th>
+		<th></th>
+		<th></th>
+		<th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
+            @Html.DisplayFor(modelItem => ((MembershipUser)item).UserName)
+        </td>                
+
         <td>
-            @Html.DisplayFor(modelItem => item.UserIntId)
+            @Html.DisplayFor(modelItem => ((MembershipUser)item).Email)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.UserId }) |
-            @Html.ActionLink("Details", "Details", new { id = item.UserId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.UserId })
+		@if (((MembershipUser)item).IsOnline) { <td>ON-line</td>} else {<td>OFF-line</td> }
+		<td>
+            @Html.DisplayFor(modelItem => ((MembershipUser)item).CreationDate)
         </td>
+		<td>
+            @Html.DisplayFor(modelItem => ((MembershipUser)item).LastActivityDate)
+        </td>
+		<td>
+			@Html.ActionLink("Edit", "Edit", new { name=((MembershipUser)item).UserName } ) 
+		</td>
+		<td>
+			@Html.ActionLink("Password Reset", "PasswordReset", new { name=((MembershipUser)item).UserName } ) 
+		</td>
+		<td>
+			@Html.ActionLink("Delete", "Delete", new { name=((MembershipUser)item).UserName })
+		</td>
     </tr>
 }
-
 </table>

@@ -1,4 +1,4 @@
-﻿@model Presentation.Models.User
+﻿@model System.Web.Security.MembershipUser
 
 @{
     ViewBag.Title = "Delete";
@@ -12,7 +12,7 @@
 
     <div class="display-label">Name</div>
     <div class="display-field">
-        @Html.DisplayFor(model => model.Name)
+        @Html.DisplayFor(model => model.UserName)
     </div>
 </fieldset>
 @using (Html.BeginForm()) {

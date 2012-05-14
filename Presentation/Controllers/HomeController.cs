@@ -23,6 +23,12 @@ namespace Presentation.Controllers
             return View();
         }
 
+        [HttpPost]
+        public ActionResult Index(string searchString)
+        {
+            return View();
+        }
+
         public ActionResult About()
         {
             return View();
