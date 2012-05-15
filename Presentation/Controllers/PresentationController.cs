@@ -16,14 +16,12 @@ namespace Presentation.Controllers
 
         private IPresentationRepository repository;
 
-
         public PresentationController()
         {
             this.repository = new 
                 PresentationRepository(new UserContext());
         }
-
-        //
+        
         // GET: /Presentation/
 
         public ViewResult Index()
@@ -37,8 +35,7 @@ namespace Presentation.Controllers
             else
                 return View(repository.GetAllPresentations());
         }
-
-        //
+        
         // GET: /Presentation/Details/5
 
         public ViewResult Details(int id)
@@ -46,8 +43,7 @@ namespace Presentation.Controllers
             var presentation = repository.GetPresentation(id);
             return View(presentation);
         }
-
-        //
+        
         // GET: /Presentation/Create
 
         public ActionResult Create()
@@ -61,8 +57,7 @@ namespace Presentation.Controllers
                 return RedirectToAction("Index");
             }
         }
-
-        //
+        
         // POST: /Presentation/Create
 
         [HttpPost]
@@ -79,8 +74,7 @@ namespace Presentation.Controllers
             }
             return RedirectToAction("Index");
         }
-        
-        //
+                
         // GET: /Presentation/Edit/5
  
         public ActionResult Edit(int id)
@@ -94,8 +88,7 @@ namespace Presentation.Controllers
             }
             return RedirectToAction("Index");
         }
-
-        //
+        
         // POST: /Presentation/Edit/5
 
         [HttpPost]
@@ -109,8 +102,7 @@ namespace Presentation.Controllers
             }
             return View(presentation);
         }
-
-        //
+        
         // GET: /Presentation/Delete/5
  
         public ActionResult Delete(int id)
@@ -125,8 +117,7 @@ namespace Presentation.Controllers
             }
             return RedirectToAction("Index");
         }
-
-        //
+        
         // POST: /Presentation/Delete/5
 
         [HttpPost, ActionName("Delete")]

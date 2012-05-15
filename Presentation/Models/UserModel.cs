@@ -8,12 +8,11 @@ namespace Presentation.Models
 {
     [Table("aspnet_Users")]
     
-    public class User
+    public class UserModel
     {
-
         [Key]
         [Column("UserId")]
-        
+
         public Guid UserId { get; set; }
 
         [Column("UserName")]
@@ -23,10 +22,19 @@ namespace Presentation.Models
         [Column("UserIntId")]
         public int UserIntId { get; set; }
 
+        //[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        //[Column("UserIntId")]
+        //public int UserIntId { get; set; }
+
         //[ForeignKey("UserId")]
         //public virtual UserDetails UserDetails { get; set; }
 
         //public virtual ICollection<aspnet_Membership> UserDetails { get; set; }
+
+    }
+    public class UserNameModel
+    {
+        public string UserName { get; set; }
 
     }
 }

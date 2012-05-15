@@ -9,8 +9,7 @@ using Presentation.Model;
 namespace Presentation.Controllers
 {
     public class SearchController : Controller
-    {
-        //
+    {        
         // GET: /Search/
         
         public ActionResult Index()
@@ -23,7 +22,6 @@ namespace Presentation.Controllers
         public ActionResult Index(string searchString)
         {
             ViewBag.Message = searchString;
-
             // this code must be changed
             var repository = new PresentationRepository(new UserContext());
             return View(repository.GetAllPresentations());

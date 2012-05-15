@@ -24,6 +24,7 @@
 							<li>@Html.ActionLink("Admin Dashboard", "../Admin/Dashboard" )</li>
 						}			
 						<li>@Html.ActionLink("My Presentations", "../Presentation/Index" )</li>
+						<li>@Html.ActionLink("Account", "../User/Details", new { name=User.Identity.Name } )</li>
 					}						
                    	<li>@Html.ActionLink("Home", "Index", "Home")</li>				
                     <li>@Html.ActionLink("About", "About", "Home")</li>

@@ -38,7 +38,7 @@
 			@Html.ActionLink("Edit", "Edit", new { name=((MembershipUser)item).UserName } ) 
 		</td>
 		<td>
-			@Html.ActionLink("Password Reset", "PasswordReset", new { name=((MembershipUser)item).UserName } ) 
+			@Html.ActionLink("Password Reset", "ResetPassword", new { name=((MembershipUser)item).UserName } ) 
 		</td>
 		<td>
 			@Html.ActionLink("Delete", "Delete", new { name=((MembershipUser)item).UserName })

@@ -10,9 +10,8 @@ namespace Presentation.Model
 {
     public class UserContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
-        public DbSet<UserDetails> UserDetails { get; set; }
+        public DbSet<UserModel> Users { get; set; }
+        public DbSet<UserDetailsModel> UserDetails { get; set; }
         public DbSet<PresentationModel> Presentation { get; set; }
     }
-
 }

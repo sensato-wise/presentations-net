@@ -9,93 +9,115 @@ using Presentation.Models;
 using Presentation.Model;
 using System.Web.Security;
 using System.Collections;
+using System.Web.Routing;
 
 namespace Presentation.Controllers
 { 
     public class UserController : Controller
     {
-        private UserContext db = new UserContext();
-        private MembershipUser EditedUser;
-        //
+        private UserContext db = new UserContext();        
+        
         // GET: /User/
         [Authorize(Roles = "Admin")]
         public ViewResult Index()
         {            
-            System.Web.Security.MembershipUserCollection mc = Membership.GetAllUsers();            
-           // return View(db.Users.ToList());            
-            /*mc[0].CreationDate
-            mc[0].Email
-            mc[0].IsOnline
-            mc[0].UserName
-            mc[0].LastActivityDate
-            mc[0].
-            mc[0].ResetPassword*/
-            return View(mc);            
+            var users = Membership.GetAllUsers();
+            return View(users);         
         }
-
-        //
+        
         // GET: /User/Details/5
 
-        public ViewResult Details(Guid id)
-        {
-            User user = db.Users.Find(id);
-            
-            UserDetails a = db.UserDetails.Find(id);
-            return View(user);
-        }
-                
-        //
-        // GET: /User/Edit/5
-        //
-        // POST: /User/Edit/5        
-        public ActionResult Edit(string name)
+        public ActionResult Details(string name)
         {
             var user = Membership.GetUser(name);
-            if ( User.IsInRole("Admin") || User.Identity.Name == user.UserName )
+            if (User.IsInRole("Admin") || User.Identity.Name == user.UserName)
             {
-                EditedUser = user;
-                return View(user);
-            }
-            return RedirectToAction("Index");
-            /*if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);*/
-        }
-        [HttpPost]
-        public ActionResult Edit(MembershipUser user)
-        {
-            if (ModelState.IsValid)
-            {
-                if (EditedUser != null)
+                var userModel = db.Users.Find(user.ProviderUserKey);
+                var userDetailsModel = db.UserDetails.Find(userModel.UserId);
+                if (userDetailsModel != null)
                 {
-                    Membership.UpdateUser(EditedUser);                    
+                    ViewBag.Message = name;
+                    return View(userDetailsModel);
                 }
             }
-          //  if (User.IsInRole("Admin") || User.Identity.Name == user.UserName)
-            {
-              //  return View(user);
-            }
-            return RedirectToAction("Index");
-            /*if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(user);*/
+            return RedirectToAction("../Home/Index");
         }
-        //
+        
+        // GET: /User/Edit/5
+        [Authorize]
+        public ActionResult Edit(string name)
+        {            
+            var user = Membership.GetUser(name);                      
+            if ( User.IsInRole("Admin") || User.Identity.Name == user.UserName )
+            {
+                var userModel = db.Users.Find(user.ProviderUserKey);
+                var userDetailsModel = db.UserDetails.Find(userModel.UserId);
+                if (userDetailsModel != null)
+                {
+                    ViewBag.Message = name;                                        
+                    return View(userDetailsModel);
+                }
+            }
+            return RedirectToAction("../Home/Index");           
+        }
+        
+        // POST: /User/Edit/5 
+        [HttpPost]
+        public ActionResult Edit(UserDetailsModel user)
+        {                                  
+           if (User.IsInRole("Admin") || db.Users.Find(user.UserId).Name == User.Identity.Name )
+            {               
+                if (ModelState.IsValid)
+                {                    
+                    db.Entry(user).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(user);
+            }
+           return RedirectToAction("../Home/Index");       
+        }
+        
+        [Authorize]
+        public ActionResult ResetPassword(string name)
+        {
+            var user = Membership.GetUser(name);
+            if (User.IsInRole("Admin") || User.Identity.Name == user.UserName)
+            {                                        
+                var model = new UserNameModel();
+                model.UserName = name;
+                return View(model);
+            }
+            return RedirectToAction("Index");            
+        }
+        
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult ResetPassword(UserNameModel model)
+        {
+            if (ModelState.IsValid)
+                {                   
+                     MembershipUser currentUser = Membership.GetUser(model.UserName, true /* userIsOnline */);
+                     string NewPass = currentUser.ResetPassword();
+                     RouteValueDictionary routeValues = new RouteValueDictionary();
+                     routeValues.Add("NewPassword", NewPass);
+                     return RedirectToAction("ResetPasswordSuccess", routeValues);        
+                }
+            return View();
+        }
+
+        public ActionResult ResetPasswordSuccess(string NewPassword)
+        {
+            ViewData["NewPassword"] = NewPassword;
+            return View();
+        }
+        
         // GET: /User/Delete/5
 
         public ActionResult Delete(MembershipUser user)
         {
             //User user = db.Users.Find(id);
-            return View(user);
-            
+            return View(user);            
         }
 
         //
@@ -111,8 +133,8 @@ namespace Presentation.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            //db.Dispose();
-            //base.Dispose(disposing);
+            db.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

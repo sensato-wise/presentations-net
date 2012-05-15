@@ -10,9 +10,8 @@ namespace Presentation.Controllers
 {
     public class AdminController : Controller
     {
-        //
-        // GET: /Admin/
-                
+       
+        // GET: /Admin/                
         [Authorize(Roles="Admin")]
         public ActionResult Dashboard()
         {
