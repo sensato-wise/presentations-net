@@ -35,13 +35,13 @@
             @Html.DisplayFor(modelItem => ((MembershipUser)item).LastActivityDate)
         </td>
 		<td>
-			@Html.ActionLink("Edit", "Edit", new { name=((MembershipUser)item).UserName } ) 
+			@Html.ActionLink("Edit", "Edit", new { Name=((MembershipUser)item).UserName, ViewType="All" } ) 
 		</td>
 		<td>
-			@Html.ActionLink("Password Reset", "ResetPassword", new { name=((MembershipUser)item).UserName } ) 
+			@Html.ActionLink("Password Reset", "ResetPassword", new { Name=((MembershipUser)item).UserName, ViewType="All"  } ) 
 		</td>
 		<td>
-			@Html.ActionLink("Delete", "Delete", new { name=((MembershipUser)item).UserName })
+			@Html.ActionLink("Delete", "Delete", new { Name=((MembershipUser)item).UserName, ViewType="All" }  )
 		</td>
     </tr>
 }

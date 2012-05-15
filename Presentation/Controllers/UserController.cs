@@ -27,17 +27,20 @@ namespace Presentation.Controllers
         
         // GET: /User/Details/5
 
-        public ActionResult Details(string name)
+        public ActionResult Details(string Name, string ViewType )
         {
-            var user = Membership.GetUser(name);
+            var user = Membership.GetUser(Name);
             if (User.IsInRole("Admin") || User.Identity.Name == user.UserName)
             {
                 var userModel = db.Users.Find(user.ProviderUserKey);
                 var userDetailsModel = db.UserDetails.Find(userModel.UserId);
                 if (userDetailsModel != null)
                 {
-                    ViewBag.Message = name;
-                    return View(userDetailsModel);
+                    var model = new UserEditModel();
+                    model.UserName = Name;
+                    model.ViewType = ViewType;
+                    model.UserDetails = userDetailsModel;                    
+                    return View(model);
                 }
             }
             return RedirectToAction("../Home/Index");
@@ -45,17 +48,21 @@ namespace Presentation.Controllers
         
         // GET: /User/Edit/5
         [Authorize]
-        public ActionResult Edit(string name)
+        public ActionResult Edit(string Name, string ViewType )
         {            
-            var user = Membership.GetUser(name);                      
+            var user = Membership.GetUser(Name);                      
             if ( User.IsInRole("Admin") || User.Identity.Name == user.UserName )
             {
                 var userModel = db.Users.Find(user.ProviderUserKey);
-                var userDetailsModel = db.UserDetails.Find(userModel.UserId);
+                var userDetailsModel = db.UserDetails.Find(userModel.UserId); 
                 if (userDetailsModel != null)
                 {
-                    ViewBag.Message = name;                                        
-                    return View(userDetailsModel);
+                    ViewBag.Message = Name;                                        
+                    var model = new UserEditModel();
+                    model.ViewType = ViewType;
+                    model.UserName = Name;
+                    model.UserDetails = userDetailsModel;
+                    return View(model);
                 }
             }
             return RedirectToAction("../Home/Index");           
@@ -63,68 +70,83 @@ namespace Presentation.Controllers
         
         // POST: /User/Edit/5 
         [HttpPost]
-        public ActionResult Edit(UserDetailsModel user)
-        {                                  
-           if (User.IsInRole("Admin") || db.Users.Find(user.UserId).Name == User.Identity.Name )
+        public ActionResult Edit(UserEditModel model)
+        {                            
+           if (User.IsInRole("Admin") || db.Users.Find(model.UserDetails.UserId).Name == User.Identity.Name )
             {               
                 if (ModelState.IsValid)
                 {                    
-                    db.Entry(user).State = EntityState.Modified;
+                    db.Entry(model.UserDetails).State = EntityState.Modified;
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    if (model.ViewType == "All")
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        RouteValueDictionary routeValues = new RouteValueDictionary();
+                        routeValues.Add("Name", model.UserName);
+                        routeValues.Add("ViewType", model.ViewType);
+                        return RedirectToAction("../User/Details",routeValues);
+                    }
                 }
-                return View(user);
+                return View(model);
             }
            return RedirectToAction("../Home/Index");       
         }
         
         [Authorize]
-        public ActionResult ResetPassword(string name)
+        public ActionResult ResetPassword(string Name, string ViewType)
         {
-            var user = Membership.GetUser(name);
+            var user = Membership.GetUser(Name);
             if (User.IsInRole("Admin") || User.Identity.Name == user.UserName)
-            {                                        
-                var model = new UserNameModel();
-                model.UserName = name;
+            {
+                var model = new UserEditModel();
+                model.UserName = Name;
+                model.ViewType = ViewType;
                 return View(model);
             }
-            return RedirectToAction("Index");            
+            return RedirectToAction("../Home/Index");            
         }
         
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public ActionResult ResetPassword(UserNameModel model)
+        public ActionResult ResetPassword(UserEditModel model)
         {
             if (ModelState.IsValid)
-                {                   
+                {                            
                      MembershipUser currentUser = Membership.GetUser(model.UserName, true /* userIsOnline */);
                      string NewPass = currentUser.ResetPassword();
                      RouteValueDictionary routeValues = new RouteValueDictionary();
                      routeValues.Add("NewPassword", NewPass);
+                     routeValues.Add("ViewType", model.ViewType);
+                     routeValues.Add("UserName", model.UserName);
                      return RedirectToAction("ResetPasswordSuccess", routeValues);        
                 }
             return View();
         }
 
-        public ActionResult ResetPasswordSuccess(string NewPassword)
+        public ActionResult ResetPasswordSuccess(string NewPassword, string ViewType,string UserName)
         {
             ViewData["NewPassword"] = NewPassword;
-            return View();
+            ViewData["ViewType"] = ViewType;
+            ViewData["UserName"] = UserName;
+            return View();            
         }
         
         // GET: /User/Delete/5
 
-        public ActionResult Delete(MembershipUser user)
+        public ActionResult Delete(string Name, string ViewType)
         {
             //User user = db.Users.Find(id);
-            return View(user);            
+            return View();            
         }
 
         //
         // POST: /User/Delete/5
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(Guid id)
+        public ActionResult DeleteConfirmed(string Name)
         {            
             //User user = db.Users.Find(id);
             //Membership.DeleteUser(user.Name, true);

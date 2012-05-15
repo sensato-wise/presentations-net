@@ -1,4 +1,4 @@
-﻿@model Presentation.Models.UserDetailsModel
+﻿@model Presentation.Models.UserEditModel
 
 @{
     //ViewBag.Title = "Edit";
@@ -12,23 +12,23 @@
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>Details for:
-			@ViewBag.Message
+        <legend>Details for:			
 		</legend>       
-		@Html.HiddenFor(model => model.UserId)
-		@Html.HiddenFor(model => model.Password)
-		@Html.HiddenFor(model => model.PasswordQuestion)
-		@Html.HiddenFor(model => model.PasswordAnswer)
-		@Html.HiddenFor(model => model.CreateDate)		        
-
+		@Html.HiddenFor(model => model.UserName)
+		@Html.HiddenFor(model => model.ViewType)
+		@Html.HiddenFor(model => model.UserDetails.UserId)
+		@Html.HiddenFor(model => model.UserDetails.Password)
+		@Html.HiddenFor(model => model.UserDetails.PasswordQuestion)
+		@Html.HiddenFor(model => model.UserDetails.PasswordAnswer)
+		@Html.HiddenFor(model => model.UserDetails.CreateDate)		        
         <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
+            @Html.LabelFor(model => model.UserDetails.Email)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
-        </div>
-        <p>
+            @Html.EditorFor(model => model.UserDetails.Email)
+            @Html.ValidationMessageFor(model => model.UserDetails.Email)
+        </div>		
+		<p>
             <input type="submit" value="Save" />
         </p>
     </fieldset>

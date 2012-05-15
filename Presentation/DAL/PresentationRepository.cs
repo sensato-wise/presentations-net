@@ -68,11 +68,11 @@ namespace Presentation.DAL
 
         public Guid GetUserGUID(string name)
         {
-            DbSet<UserModel> dbSet = context.Set<UserModel>();
+            DbSet<UserModels> dbSet = context.Set<UserModels>();
             var users = dbSet.Where(i => i.Name == name).ToList();
             if (users != null)
             {
-                UserModel user = users[0];
+                UserModels user = users[0];
                 return user.UserId;
             }
             else

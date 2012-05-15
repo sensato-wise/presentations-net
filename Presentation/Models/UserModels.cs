@@ -6,9 +6,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Presentation.Models
 {
-    [Table("aspnet_Users")]
-    
-    public class UserModel
+    [Table("aspnet_Users")]    
+    public class UserModels
     {
         [Key]
         [Column("UserId")]
@@ -25,16 +24,30 @@ namespace Presentation.Models
         //[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         //[Column("UserIntId")]
         //public int UserIntId { get; set; }
-
         //[ForeignKey("UserId")]
         //public virtual UserDetails UserDetails { get; set; }
-
         //public virtual ICollection<aspnet_Membership> UserDetails { get; set; }
-
     }
-    public class UserNameModel
+    
+    [DisplayColumn("UserId")]    
+    [Table("aspnet_Membership")]
+    public class UserDetailsModel
     {
-        public string UserName { get; set; }
-
+        [Key]
+        [Column("UserId")]  
+        public Guid UserId { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string PasswordQuestion { get; set; }
+        public string PasswordAnswer { get; set; }
+        public DateTime? CreateDate { get; set; }
     }
+
+     public class UserEditModel
+     {
+         public string ViewType { get; set; }
+         public string UserName { get; set; }
+         public UserDetailsModel UserDetails { get; set; }
+     }
+    
 }

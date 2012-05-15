@@ -1,20 +1,32 @@
-﻿@model Presentation.Models.UserDetailsModel
+﻿@model Presentation.Models.UserEditModel
 
 @{
     ViewBag.Title = "Details";
 }
-
 <h2>Manage User</h2>
+<table Width=30%>
+<tr>
+	<td>UserName</td>
+	<td>@Html.DisplayFor(model => model.UserName) </td>
+</tr>
 
-<fieldset>
-    <legend>User Details</legend>
+<tr>                
+	<td>E-mail</td>
+	<td>@Html.DisplayFor(model => model.UserDetails.Email) </td>
+</tr>
 
-    <div class="display-label">Name @ViewBag.message</div>		
-    <div class="display-field">
-        @Html.DisplayFor(model => model.Email)
-    </div>
-</fieldset>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { name = @ViewBag.message }) |
-    @Html.ActionLink("Back to Home", "../Home/Index")
-</p>
+<tr>
+	<td>Since</td>
+	<td>@Html.DisplayFor(model => model.UserDetails.CreateDate) </td>
+</tr>
+<tr>
+<td>
+    @Html.ActionLink("Edit", "Edit", new { Name=Model.UserName, ViewType="One" }) 
+</td><td></td>
+</tr>
+<tr>
+<td>
+	 @Html.ActionLink("Reset Password", "ResetPassword", new { Name=Model.UserName, ViewType="One" })    
+</td><td></td>
+</tr>
+</table>
