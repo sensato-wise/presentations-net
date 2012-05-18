@@ -1,0 +1,13 @@
+﻿@model Presentation.Models.UserEditModel
+@{
+    ViewBag.Title = "Delete";
+}
+@if (string.Equals(ViewData["Status"],"OK")) {
+	<h2>User has been deleted successfully.</h2>			
+	}
+@if (string.Equals(ViewData["Status"],"Fail")) {
+<h2>Delete Failed</h2>	
+	}
+<div>
+		@Html.ActionLink("Back To List", "Index")
+</div>

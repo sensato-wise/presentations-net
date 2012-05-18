@@ -193,6 +193,7 @@
     <None Include="Views\Admin\Dashboard.cshtml" />
     <None Include="Views\Search\Index.cshtml" />
     <Content Include="Views\User\ResetPasswordSuccess.cshtml" />
+    <None Include="Views\User\DeleteSuccess.cshtml" />
     <None Include="Views\User\ResetPassword.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

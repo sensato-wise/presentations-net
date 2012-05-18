@@ -5,19 +5,18 @@
 }
 
 <h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-<fieldset>
-    <legend>User</legend>
-
-    <div class="display-label">Name</div>
-    <div class="display-field">
-        @Html.DisplayFor(model => model.UserName)
+@using (Html.BeginForm("ResetPassword")) {
+    <div>
+        <fieldset>
+            <legend>Delete User @Model.UserName</legend>          
+            <p>				  
+				@Html.HiddenFor(model => model.UserName)
+				@Html.HiddenFor(model => model.ViewType)    				
+				<input type="submit" value="Delete User" />
+            </p>
+        </fieldset>
     </div>
-</fieldset>
-@using (Html.BeginForm()) {
-    <p>
-        <input type="submit" value="Delete" /> |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-}
+} 
+<div>
+    @Html.ActionLink("Back To List", "Index")
+</div>

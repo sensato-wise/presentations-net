@@ -110,18 +110,21 @@ namespace Presentation.Controllers
         }
         
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize()]
         public ActionResult ResetPassword(UserEditModel model)
         {
             if (ModelState.IsValid)
-                {                            
-                     MembershipUser currentUser = Membership.GetUser(model.UserName, true /* userIsOnline */);
-                     string NewPass = currentUser.ResetPassword();
-                     RouteValueDictionary routeValues = new RouteValueDictionary();
-                     routeValues.Add("NewPassword", NewPass);
-                     routeValues.Add("ViewType", model.ViewType);
-                     routeValues.Add("UserName", model.UserName);
-                     return RedirectToAction("ResetPasswordSuccess", routeValues);        
+                {
+                    if (User.IsInRole("Admin") || model.UserName == User.Identity.Name)
+                    {
+                        MembershipUser currentUser = Membership.GetUser(model.UserName, true /* userIsOnline */);
+                        string NewPass = currentUser.ResetPassword();
+                        RouteValueDictionary routeValues = new RouteValueDictionary();
+                        routeValues.Add("NewPassword", NewPass);
+                        routeValues.Add("ViewType", model.ViewType);
+                        routeValues.Add("UserName", model.UserName);
+                        return RedirectToAction("ResetPasswordSuccess", routeValues);
+                    }
                 }
             return View();
         }
@@ -138,19 +141,37 @@ namespace Presentation.Controllers
 
         public ActionResult Delete(string Name, string ViewType)
         {
-            //User user = db.Users.Find(id);
-            return View();            
+            var model = new UserEditModel();
+            model.UserName = Name;
+            model.ViewType = ViewType;
+            return View(model);
         }
 
         //
         // POST: /User/Delete/5
+        [HttpPost]
+        public ActionResult Delete(UserEditModel model)
+        {        
+            if (ModelState.IsValid)
+                {
+                    if (User.IsInRole("Admin"))
+                    {
+                        MembershipUser currentUser = Membership.GetUser(model.UserName, true /* userIsOnline */);
+                        bool deleteResult = Membership.DeleteUser(model.UserName);
+                        string statusString = "OK";
+                        if (!deleteResult) statusString = "Fail";                        
+                        RouteValueDictionary routeValues = new RouteValueDictionary();
+                        routeValues.Add("Status", statusString);                        
+                        return RedirectToAction("DeleteSuccess", routeValues);
+                    }
+                }            
+            return View(model);
+        }
 
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(string Name)
-        {            
-            //User user = db.Users.Find(id);
-            //Membership.DeleteUser(user.Name, true);
-            return RedirectToAction("Index");
+        public ActionResult DeleteSuccess(string Status)
+        {
+            ViewData["Status"] = Status;
+            return View();
         }
 
         protected override void Dispose(bool disposing)
