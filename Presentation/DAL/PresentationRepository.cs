@@ -14,11 +14,13 @@ namespace Presentation.DAL
     {
         private UserContext context;
         private DbSet<PresentationModel> dbSet;
+        private DbSet<Tag> dbSetTag;
 
         public PresentationRepository(UserContext content)
         {
             this.context = content;
             this.dbSet = content.Set<PresentationModel>();
+            this.dbSetTag = content.Set<Tag>();
         }
 
 
@@ -58,7 +60,70 @@ namespace Presentation.DAL
 
         public void InsertPresentation(Models.PresentationModel presentation)
         {
-                context.Presentation.Add(presentation);
+            ParseTags(presentation);
+            context.Presentation.Add(presentation);
+        }
+
+        private void ParseTags(PresentationModel presentation)
+        {
+            var tags = presentation.Tags.Split(',');
+            int tagId;
+            for (int i = 0; i < tags.Length; ++i)
+            {
+                if (!IsTagExist(tags[i], out tagId))
+                    AddNewTag(tags[i], out tagId);
+                InsertTag(i, tagId, presentation);
+            }
+        }
+
+        private void InsertTag(int tagNumber, int tagId, PresentationModel presentation)
+        {
+            if (tagId > 0)
+            {
+                switch (tagNumber)
+                {
+                    case 0: presentation.Tag1 = tagId; break;
+                    case 1: presentation.Tag2 = tagId; break;
+                    case 2: presentation.Tag3 = tagId; break;
+                    case 3: presentation.Tag4 = tagId; break;
+                    case 4: presentation.Tag5 = tagId; break;
+                }
+            }
+        }
+
+
+        private bool AddNewTag(string tagName, out int tagId)
+        {
+            Tag tag = new Tag();
+            tag.Name = tagName;
+            try
+            {
+                context.Tags.Add(tag);
+                context.SaveChanges();
+                IsTagExist(tagName, out tagId);
+                return true;
+            }
+            catch (Exception e)
+            {
+                tagId = default(int);
+                return false;
+            }
+        }
+
+        private bool IsTagExist(string tagName, out int id)
+        {
+            var tags = dbSetTag.Where(i => i.Name.Equals(tagName)).ToList();
+            if (tags.Count > 0)
+            {
+                Tag tag = tags[0];
+                id = tag.Id;
+                return true;
+            }
+            else
+            {
+                id = default(int);
+                return false;
+            }
         }
 
         public void Save()
@@ -68,11 +133,12 @@ namespace Presentation.DAL
 
         public Guid GetUserGUID(string name)
         {
-            DbSet<UserModels> dbSet = context.Set<UserModels>();
+            DbSet<UserModel> dbSet = context.Set<UserModel>();
+
             var users = dbSet.Where(i => i.Name == name).ToList();
             if (users != null)
             {
-                UserModels user = users[0];
+                UserModel user = users[0];
                 return user.UserId;
             }
             else

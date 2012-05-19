@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Presentation.Models
 {
     [Table("aspnet_Users")]    
-    public class UserModels
+    public class UserModel
     {
         [Key]
         [Column("UserId")]

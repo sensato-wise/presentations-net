@@ -104,7 +104,7 @@ namespace Presentation.Controllers
                 var model = new UserEditModel();
                 model.UserName = Name;
                 model.ViewType = ViewType;
-                return View(model);
+                return View(model);                
             }
             return RedirectToAction("../Home/Index");            
         }
