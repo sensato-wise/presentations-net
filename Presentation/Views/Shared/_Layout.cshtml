@@ -17,6 +17,7 @@
             </div>
             <div id="menucontainer">
                 <ul id="menu">				
+				<li>@Html.ActionLink("Designer", "../SlideDisplay/Designer", "Designer")</li>
 				@if (Request.IsAuthenticated) {	
 						if (User.IsInRole("Admin") ) {
 							<li>@Html.ActionLink("Admin Dashboard", "../Admin/Dashboard" )</li>

@@ -21,16 +21,12 @@
 });
 </script>
 
-
-
-
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>PresentationModel</legend>
+        <legend>Presentation</legend>
         
-
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
         </div>
@@ -46,9 +42,6 @@
             @Html.EditorFor(model => model.Description)
             @Html.ValidationMessageFor(model => model.Description)
         </div>
-
-        
-
         <input name="tags" id="tags" runat="server" />
         <p>
             <input id="save" type="submit" value="Create" runat="server" />

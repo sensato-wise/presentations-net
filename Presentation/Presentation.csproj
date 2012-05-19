@@ -69,6 +69,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PresentationController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SlideDisplayController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\IPresentationRepository.cs" />
     <Compile Include="DAL\ITagsRepository.cs" />
@@ -120,6 +121,8 @@
     <Content Include="Content\themes\base\jquery.ui.slider.css" />
     <Content Include="Content\themes\base\jquery.ui.tabs.css" />
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
+    <Content Include="css\site.css" />
+    <Content Include="css\slideshow.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
     <Content Include="Scripts\jquery-1.5.1.js" />
@@ -133,6 +136,11 @@
     <Content Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\js\lib\jquery-1.6.2.min.js" />
+    <Content Include="Scripts\js\lib\modernizr-2.0.min.js" />
+    <Content Include="Scripts\js\lib\respond.min.js" />
+    <Content Include="Scripts\js\site.js" />
+    <Content Include="Scripts\js\slideshow.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Scripts\tag-it.js" />
@@ -205,7 +213,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Admin\Dashboard.cshtml" />
+    <None Include="Views\SlideDisplay\Designer.cshtml" />
     <None Include="Views\Search\Index.cshtml" />
+    <None Include="Views\SlideDisplay\_SlideDisplay.cshtml" />
     <None Include="Views\User\DeleteSuccess.cshtml" />
     <None Include="Views\User\ResetPassword.cshtml" />
     <None Include="Views\User\ResetPasswordSuccess.cshtml" />
