@@ -39,6 +39,8 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -78,6 +80,7 @@
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\PresentationModel.cs" />
+    <Compile Include="Models\RatingsModel.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\UserModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -203,7 +206,9 @@
   <ItemGroup>
     <None Include="Views\Admin\Dashboard.cshtml" />
     <None Include="Views\Search\Index.cshtml" />
-    <None Include="Views\User\PasswordReset.cshtml" />
+    <None Include="Views\User\DeleteSuccess.cshtml" />
+    <None Include="Views\User\ResetPassword.cshtml" />
+    <None Include="Views\User\ResetPasswordSuccess.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

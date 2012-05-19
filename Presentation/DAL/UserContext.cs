@@ -14,6 +14,6 @@ namespace Presentation.Model
         public DbSet<UserDetailsModel> UserDetails { get; set; }
         public DbSet<PresentationModel> Presentation { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<RatingsModel> Ratings { get; set; }
     }
-
 }

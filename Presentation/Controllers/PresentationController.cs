@@ -10,18 +10,22 @@ using Presentation.Model;
 using Presentation.DAL;
 
 namespace Presentation.Controllers
-{ 
+{
     public class PresentationController : Controller
     {
 
         private IPresentationRepository repository;
+        private ITagsRepository tagRepository;
+
 
         public PresentationController()
         {
-            this.repository = new 
+            this.repository = new
                 PresentationRepository(new UserContext());
+            this.tagRepository = new TagRepository();
         }
-        
+
+        //
         // GET: /Presentation/
 
         public ViewResult Index()
@@ -35,7 +39,8 @@ namespace Presentation.Controllers
             else
                 return View(repository.GetAllPresentations());
         }
-        
+
+        //
         // GET: /Presentation/Details/5
 
         public ViewResult Details(int id)
@@ -43,7 +48,8 @@ namespace Presentation.Controllers
             var presentation = repository.GetPresentation(id);
             return View(presentation);
         }
-        
+
+        //
         // GET: /Presentation/Create
 
         public ActionResult Create()
@@ -57,7 +63,8 @@ namespace Presentation.Controllers
                 return RedirectToAction("Index");
             }
         }
-        
+
+        //
         // POST: /Presentation/Create
 
         [HttpPost]
@@ -74,21 +81,23 @@ namespace Presentation.Controllers
             }
             return RedirectToAction("Index");
         }
-                
+
+        //
         // GET: /Presentation/Edit/5
- 
+
         public ActionResult Edit(int id)
         {
             if (Request.IsAuthenticated)
             {
                 var presentation = repository.GetPresentation(id);
                 Guid userId = repository.GetUserGUID(User.Identity.Name);
-                if(userId.Equals(presentation.UserId))
+                if (userId.Equals(presentation.UserId))
                     return View(presentation);
             }
             return RedirectToAction("Index");
         }
-        
+
+        //
         // POST: /Presentation/Edit/5
 
         [HttpPost]
@@ -102,9 +111,10 @@ namespace Presentation.Controllers
             }
             return View(presentation);
         }
-        
+
+        //
         // GET: /Presentation/Delete/5
- 
+
         public ActionResult Delete(int id)
         {
             if (Request.IsAuthenticated)
@@ -117,7 +127,8 @@ namespace Presentation.Controllers
             }
             return RedirectToAction("Index");
         }
-        
+
+        //
         // POST: /Presentation/Delete/5
 
         [HttpPost, ActionName("Delete")]
@@ -126,6 +137,13 @@ namespace Presentation.Controllers
             repository.DeletePresentation(id);
             repository.Save();
             return RedirectToAction("Index");
+        }
+
+
+        public ActionResult Tags()
+        {
+            var tags = tagRepository.GetTags();
+            return View(tags);
         }
 
         protected override void Dispose(bool disposing)

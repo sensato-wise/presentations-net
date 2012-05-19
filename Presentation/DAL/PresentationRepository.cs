@@ -133,8 +133,7 @@ namespace Presentation.DAL
 
         public Guid GetUserGUID(string name)
         {
-            DbSet<UserModel> dbSet = context.Set<UserModel>();
-
+            DbSet<UserModel> dbSet = context.Set<UserModel>();            
             var users = dbSet.Where(i => i.Name == name).ToList();
             if (users != null)
             {
