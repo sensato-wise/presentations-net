@@ -20,8 +20,7 @@ namespace Presentation.Controllers
 
         public PresentationController()
         {
-            this.repository = new
-                PresentationRepository(new UserContext());
+            this.repository = new PresentationRepository();
             this.tagRepository = new TagRepository();
         }
 

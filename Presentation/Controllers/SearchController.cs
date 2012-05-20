@@ -9,12 +9,18 @@ using Presentation.Model;
 namespace Presentation.Controllers
 {
     public class SearchController : Controller
-    {        
-        // GET: /Search/
+    {
+        private IPresentationRepository presentRepository;
+
+        public SearchController()
+        {
+            presentRepository = new PresentationRepository();
+        }
+
         
         public ActionResult Index()
         {
-            var repository = new PresentationRepository(new UserContext());
+            var repository = new PresentationRepository();
             return View(repository.GetAllPresentations());            
         }
 
@@ -23,8 +29,10 @@ namespace Presentation.Controllers
         {
             ViewBag.Message = searchString;
             // this code must be changed
-            var repository = new PresentationRepository(new UserContext());
-            return View(repository.GetAllPresentations());
+            //var repository = new PresentationRepository();
+            //return View(repository.GetAllPresentations());
+            return View(presentRepository.GetPresentations(searchString));
+
         }
     }
 }

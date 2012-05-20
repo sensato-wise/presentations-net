@@ -16,11 +16,11 @@ namespace Presentation.DAL
         private DbSet<PresentationModel> dbSet;
         private DbSet<Tag> dbSetTag;
 
-        public PresentationRepository(UserContext content)
+        public PresentationRepository()
         {
-            this.context = content;
-            this.dbSet = content.Set<PresentationModel>();
-            this.dbSetTag = content.Set<Tag>();
+            this.context = new UserContext();
+            this.dbSet = context.Set<PresentationModel>();
+            this.dbSetTag = context.Set<Tag>();
         }
 
 
@@ -163,6 +163,38 @@ namespace Presentation.DAL
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+
+        public IEnumerable<PresentationModel> GetPresentations(string searchString)
+        {
+
+            var keyWords = GetKeyWords(searchString);
+            return GetPresentations(keyWords);
+        }
+
+        private string[] GetKeyWords(string searchString)
+        {
+            searchString = searchString.Replace(',', ' ');
+            var keyWords = searchString.Split(' ');
+            List<string> keyList = new List<string>();
+            foreach (var key in keyWords)
+            {
+                if (!key.Equals(""))
+                    keyList.Add(key);
+            }
+            return keyList.ToArray<string>();
+        }
+
+        private IEnumerable<PresentationModel> GetPresentations(string[] keyWords)
+        {
+            var list = new List<IEnumerable<PresentationModel>>();
+            foreach (string word in keyWords)
+                list.Add(dbSet.Where(i => i.Tags.Contains(word)).ToList());
+            IEnumerable<PresentationModel> result = new List<PresentationModel>();
+            foreach (var enumerable in list)
+                result = result.Union(enumerable).ToList();
+            return result;
         }
     }
 }
