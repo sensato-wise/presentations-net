@@ -9,6 +9,7 @@ namespace Presentation.DAL
     public interface IPresentationRepository : IDisposable
     {
         IEnumerable<PresentationModel> GetPresentations(Guid userId);
+        IEnumerable<PresentationModel> GetPresentations(string searchString);
         IEnumerable<PresentationModel> GetAllPresentations();
         PresentationModel GetPresentation(int id);
         PresentationModel CreatePresentation();
