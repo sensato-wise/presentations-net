@@ -26,6 +26,7 @@ namespace Presentation.Models
         public int? Tag4 { get; set; }
         public int? Tag5 { get; set; }
 
-
+        [NotMapped]
+        public string UserName { get; set; }
     }
 }

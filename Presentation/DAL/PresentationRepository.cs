@@ -90,7 +90,10 @@ namespace Presentation.DAL
                 }
             }
         }
-
+        public string GetUserNameById(Guid id)
+        {            
+            return context.Users.First(i => i.UserId == id).Name;                        
+        }
 
         private bool AddNewTag(string tagName, out int tagId)
         {
@@ -165,11 +168,9 @@ namespace Presentation.DAL
             GC.SuppressFinalize(this);
         }
 
-
         public IEnumerable<PresentationModel> GetPresentations(string searchString)
         {
-
-            var keyWords = GetKeyWords(searchString);
+            var keyWords = GetKeyWords(searchString);            
             return GetPresentations(keyWords);
         }
 

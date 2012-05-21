@@ -33,10 +33,21 @@ namespace Presentation.Controllers
             {
                 Guid userId = repository.GetUserGUID(User.Identity.Name);
                 var presentations = repository.GetPresentations(userId);
+                foreach (var presentationModel in presentations)
+                {
+                    presentationModel.UserName = repository.GetUserNameById(presentationModel.UserId);
+                }
                 return View(presentations);
             }
             else
-                return View(repository.GetAllPresentations());
+            {
+                var presentations = repository.GetAllPresentations();
+                foreach (var presentationModel in presentations )
+                {
+                    presentationModel.UserName = repository.GetUserNameById(presentationModel.UserId);
+                }
+                return View(presentations);            
+            }
         }
 
         //

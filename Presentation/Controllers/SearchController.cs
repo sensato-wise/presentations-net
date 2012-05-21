@@ -10,18 +10,22 @@ namespace Presentation.Controllers
 {
     public class SearchController : Controller
     {
-        private IPresentationRepository presentRepository;
+        private IPresentationRepository repository;
 
         public SearchController()
         {
-            presentRepository = new PresentationRepository();
+            repository = new PresentationRepository();
         }
 
         
         public ActionResult Index()
-        {
-            var repository = new PresentationRepository();
-            return View(repository.GetAllPresentations());            
+        {            
+            var presentations = repository.GetAllPresentations();
+            foreach (var presentationModel in presentations)
+            {
+                presentationModel.UserName = repository.GetUserNameById(presentationModel.UserId);
+            }
+            return View(presentations);            
         }
 
         [HttpPost]
@@ -31,8 +35,12 @@ namespace Presentation.Controllers
             // this code must be changed
             //var repository = new PresentationRepository();
             //return View(repository.GetAllPresentations());
-            return View(presentRepository.GetPresentations(searchString));
-
+            var presentations = repository.GetPresentations(searchString);
+            foreach (var presentationModel in presentations)
+            {
+                presentationModel.UserName = repository.GetUserNameById(presentationModel.UserId);
+            }
+            return View(presentations);            
         }
     }
 }

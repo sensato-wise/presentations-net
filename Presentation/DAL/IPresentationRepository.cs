@@ -18,5 +18,7 @@ namespace Presentation.DAL
         void UpdatePresentation(PresentationModel presentation);
         void InsertPresentation(PresentationModel presentation);
         void Save();
+
+        string GetUserNameById(Guid id);
     }
 }
