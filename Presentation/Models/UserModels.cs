@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Security;
 
 namespace Presentation.Models
 {
@@ -41,6 +42,9 @@ namespace Presentation.Models
         public string PasswordQuestion { get; set; }
         public string PasswordAnswer { get; set; }
         public DateTime? CreateDate { get; set; }
+        
+        [NotMapped]
+        public string UserRole { get { return Roles.GetRolesForUser(Membership.GetUser((object) UserId).UserName).First(); } }
     }
 
      public class UserEditModel

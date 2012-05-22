@@ -87,6 +87,7 @@ namespace Presentation.Controllers
                 {
                     repository.InsertPresentation(presentation);
                     repository.Save();
+                    return RedirectToAction("../SlideDisplay/Designer", presentation);
                 }
             }
             return RedirectToAction("Index");

@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    var admins = Roles.GetUsersInRole("Admin");
 }
 
 <h2>Users information</h2>
@@ -10,11 +11,12 @@
     <tr>
         <th>Login</th>
         <th>E-mail</th>
-		<th>Status</th>
+        <th>Status</th>
+		<th>User Role</th>
 		<th>Since</th>
-		<th>Last Activity</th>
+		<th>Last Activity</th>		
 		<th></th>
-		<th></th>
+        <th></th>
 		<th></th>
     </tr>
 
@@ -28,6 +30,15 @@
             @Html.DisplayFor(modelItem => ((MembershipUser)item).Email)
         </td>
 		@if (((MembershipUser)item).IsOnline) { <td>ON-line</td>} else {<td>OFF-line</td> }
+        <td>
+            @if (admins.Contains(((MembershipUser)item).UserName))
+            {
+                <b>Admin</b>
+            } else
+            {
+                <b>User</b>
+            }            
+        </td>
 		<td>
             @Html.DisplayFor(modelItem => ((MembershipUser)item).CreationDate)
         </td>

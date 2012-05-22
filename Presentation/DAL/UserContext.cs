@@ -14,6 +14,9 @@ namespace Presentation.Model
         public DbSet<UserDetailsModel> UserDetails { get; set; }
         public DbSet<PresentationModel> Presentation { get; set; }
         public DbSet<Tag> Tags { get; set; }
+
+        // added by algol
         public DbSet<RatingsModel> Ratings { get; set; }
+        public DbSet<SlideModel> Slides { get; set; }
     }
 }

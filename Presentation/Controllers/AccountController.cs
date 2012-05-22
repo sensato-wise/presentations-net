@@ -81,7 +81,7 @@ namespace Presentation.Controllers
                 {
                     string role = "User";
                     if (model.UserName == "admin") role = "Admin";
-                    Roles.AddUserToRole(model.UserName, role);
+                    Roles.AddUserToRole(model.UserName, role);                    
                     FormsAuthentication.SetAuthCookie(model.UserName, false /* createPersistentCookie */);
                     return RedirectToAction("Index", "Home");
                 }

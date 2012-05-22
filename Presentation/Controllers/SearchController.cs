@@ -16,7 +16,6 @@ namespace Presentation.Controllers
         {
             repository = new PresentationRepository();
         }
-
         
         public ActionResult Index()
         {            

@@ -19,6 +19,7 @@ namespace Presentation.DAL
         void InsertPresentation(PresentationModel presentation);
         void Save();
 
-        string GetUserNameById(Guid id);
+        // added by algol
+        string GetUserNameById(Guid id);        
     }
 }

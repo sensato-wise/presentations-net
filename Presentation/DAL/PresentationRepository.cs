@@ -16,13 +16,18 @@ namespace Presentation.DAL
         private DbSet<PresentationModel> dbSet;
         private DbSet<Tag> dbSetTag;
 
+        // added by algol
+        private DbSet<RatingsModel> dbRatings;
+        private DbSet<SlideModel> dbSlides;
+
         public PresentationRepository()
         {
             this.context = new UserContext();
             this.dbSet = context.Set<PresentationModel>();
             this.dbSetTag = context.Set<Tag>();
+            this.dbRatings = context.Set<RatingsModel>();
+            this.dbSlides = context.Set<SlideModel>();
         }
-
 
         public IEnumerable<Models.PresentationModel> GetPresentations(Guid userId)
         {
@@ -68,11 +73,14 @@ namespace Presentation.DAL
         {
             var tags = presentation.Tags.Split(',');
             int tagId;
-            for (int i = 0; i < tags.Length; ++i)
+            if (tags != null)
             {
-                if (!IsTagExist(tags[i], out tagId))
-                    AddNewTag(tags[i], out tagId);
-                InsertTag(i, tagId, presentation);
+                for (int i = 0; i < tags.Length; ++i)
+                {
+                    if (!IsTagExist(tags[i], out tagId))
+                        AddNewTag(tags[i], out tagId);
+                    InsertTag(i, tagId, presentation);
+                }
             }
         }
 
@@ -89,11 +97,7 @@ namespace Presentation.DAL
                     case 4: presentation.Tag5 = tagId; break;
                 }
             }
-        }
-        public string GetUserNameById(Guid id)
-        {            
-            return context.Users.First(i => i.UserId == id).Name;                        
-        }
+        }        
 
         private bool AddNewTag(string tagName, out int tagId)
         {
@@ -196,6 +200,27 @@ namespace Presentation.DAL
             foreach (var enumerable in list)
                 result = result.Union(enumerable).ToList();
             return result;
+        }
+
+        public string GetUserNameById(Guid id)
+        {
+            return context.Users.First(i => i.UserId == id).Name;
+        }
+
+        public IEnumerable<SlideModel> GetSlidesByPresentationId(int PresentationId)
+        {
+            //
+            return null;
+        }
+
+        public int GetAveragePresentationRating(int PresentationId)
+        {
+            return 0;
+        }
+                
+        private IEnumerable<PresentationModel> GetMarkedPresentationsById(Guid UserId)
+        {
+            return null;
         }
     }
 }

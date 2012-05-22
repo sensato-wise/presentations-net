@@ -3,6 +3,8 @@ The base color for this template is #5c87b2. If you'd like
 to use a different color start by replacing all instances of
 #5c87b2 with your new color.
 ----------------------------------------------------------*/
+
+
 body {
     /*background-color: #5c87b2;*/
     background-image: url(bg.jpg);
@@ -98,7 +100,7 @@ header h1, #header h1 {
     border: none;
     line-height: 2em;
     font-size: 32px !important;
-    text-shadow: 1px 1px 2px #111;
+    text-shadow: 3px 3px 4px #111;
 }
 
 #main {
@@ -126,7 +128,7 @@ footer,
 /* TAB MENU   
 ----------------------------------------------------------*/
 ul#menu {
-    border-bottom: 1px #5C87B2 solid;
+    border-bottom: 5px #5C87B2 solid;
     padding: 0 0 2px;
     position: relative;
     margin: 0;
@@ -141,7 +143,7 @@ ul#menu li {
 ul#menu li#greeting {
     padding: 10px 20px;
     font-weight: bold;
-    text-decoration: none;
+    text-decoration:beige;
     line-height: 2.8em;
     color: #fff;
 }
@@ -159,18 +161,18 @@ ul#menu li a {
 }
 
 ul#menu li a:hover {
-    background-color: #fff;
+    background-color: #a8eef4;
     text-decoration: none;
 }
 
 ul#menu li a:active {
-    background-color: #a6e2a6;
+    background-color: #0f7af3;
     text-decoration: none;
 }
 
 ul#menu li.selected a {
     background-color: #fff;
-    color: #000;
+    color: #034af3;
 }
 
 /* FORM LAYOUT ELEMENTS   
@@ -222,7 +224,7 @@ table {
 
 table td {
     padding: 5px;
-    border: solid 1px #e8eef4;
+    border: solid 1px #f8fff4;
 }
 
 table th {
