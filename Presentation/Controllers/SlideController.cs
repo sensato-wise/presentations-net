@@ -26,5 +26,13 @@ namespace Presentation.Controllers
             return View();
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Save(string[] name)
+        {
+            //return View();
+            int b = 5;
+            return null;
+        }
+
     }
 }
