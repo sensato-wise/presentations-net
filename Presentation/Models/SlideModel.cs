@@ -10,8 +10,9 @@ namespace Presentation.Models
     public class SlideModel
     {
         [Key]
+        public int Id { get; set; }
         public int PresentationId { get; set; }
-        public int Index { get; set; }
+        public int SlideNumber { get; set; }
         public byte[] Data { get; set; }
     }
 }
