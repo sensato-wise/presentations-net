@@ -47,3 +47,57 @@
     z-index: 3;
     display: none;
 }
+
+
+#slideshow-carousel {
+	float:left; 
+	width:206px;
+	position:relative;
+	vertical-align:middle;
+	margin-top:70px;
+	margin-left:30px;
+}
+
+#slideshow-carousel ul {
+	margin:0; 
+	padding:0;
+	list-style:none;
+}
+
+#slideshow-carousel li {
+	background:#fff; 
+	height:97px; 
+	position:relative
+}
+
+#slideshow-carousel li .arrow {
+	left:3px; 
+	top:28px; 
+	position:absolute; 
+	width:20px; 
+	height:40px; 
+	background:url(images/arrow_white.png) no-repeat 0 0; 
+	display:block;
+}
+
+#slideshow-carousel li a {
+	background:#000; 
+	display:block; 
+	width:206px; 
+	height:95px;
+}
+
+
+#slideshow-carousel .active {
+	filter:alpha(opacity=100); 
+	-moz-opacity:1.0; 
+	-khtml-opacity: 1.0; 
+	opacity: 1.0;
+}
+
+#slideshow-carousel .faded {
+	filter:alpha(opacity=100); 
+	-moz-opacity:1.0; 
+	-khtml-opacity: 1.0; 
+	opacity: 1.0;
+}

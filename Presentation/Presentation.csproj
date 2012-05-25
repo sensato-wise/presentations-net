@@ -116,6 +116,8 @@
     <Content Include="Content\slide\images\7.gif" />
     <Content Include="Content\slide\images\7_big.gif" />
     <Content Include="Content\slide\images\arrow_white.png" />
+    <Content Include="Content\slide\images\background.jpg" />
+    <Content Include="Content\slide\images\new_slide.gif" />
     <Content Include="Content\slide\images\next-vertical.png" />
     <Content Include="Content\slide\images\prev-vertical.png" />
     <Content Include="Content\slide\jquery.jcarousel.css" />
@@ -236,6 +238,7 @@
     <Content Include="Views\Slide\Index.cshtml" />
     <Content Include="Views\Slide\Edit.cshtml" />
     <Content Include="Views\Slide\Temp.cshtml" />
+    <Content Include="Views\Slide\Save.cshtml" />
     <None Include="Views\User\DeleteSuccess.cshtml" />
     <None Include="Views\User\ResetPassword.cshtml" />
     <None Include="Views\User\ResetPasswordSuccess.cshtml" />

@@ -4,12 +4,37 @@
     Html.Assets().Styles.Add("/Content/slide/skin.css");
 }
 
-<h2>Temp</h2>
 <script type="text/javascript" src="../../Scripts/jquery-1.5.1.min.js"></script>
 <script type="text/javascript" src="../../Scripts/jquery.jcarousel.pack.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" src="../../Scripts/paintweb.js"></script>
 
+<script type="text/javascript">
+    var pw;
+    var tempImage;
+    var slideCount = 0;
+    var currentSlide = 1;
+    var background = "../../Content/slide/images/background.jpg";
+    var newSlide = "../../Content/slide/images/new_slide.gif";
     $(document).ready(function () {
+
+        // paint web
+
+        var target = document.getElementById('PaintWebTarget');
+        pw = new PaintWeb();
+
+        var item = document.createElement('img');
+
+        item.setAttribute("src", background);
+
+        pw.config.guiPlaceholder = target;
+        pw.config.imageLoad = item;
+        pw.config.configFile = 'config-example.json';
+        pw.init();
+        pw.events.add('imageSave', saveHandler);
+
+        // end paint web
+        createStandartSlides();
+
 
         //jCarousel Plugin
         $('#carousel').jcarousel({
@@ -22,7 +47,7 @@
 
         //Front page Carousel - Initial Setup
         //set all the item to full opacity
-        $('div#slideshow-carousel a img').css({ 'opacity': '0.5' });
+        $('div#slideshow-carousel a img').css({ 'opacity': '1.0' });
 
         //readjust the first item to 50% opacity
         $('div#slideshow-carousel a img:first').css({ 'opacity': '1.0' });
@@ -38,7 +63,7 @@
             //check to make sure the item is not selected
             if (!$(this).has('span').length) {
                 //reset all the item's opacity to 50%
-                $('div#slideshow-carousel li a img').stop(true, true).css({ 'opacity': '0.5' });
+                $('div#slideshow-carousel li a img').stop(true, true).css({ 'opacity': '0.9' });
 
                 //adust the current selected item to full opacity
                 $(this).stop(true, true).children('img').css({ 'opacity': '1.0' });
@@ -47,7 +72,7 @@
         function () {
 
             //on mouse out, reset all the item back to 50% opacity
-            $('div#slideshow-carousel li a img').stop(true, true).css({ 'opacity': '0.5' });
+            $('div#slideshow-carousel li a img').stop(true, true).css({ 'opacity': '0.9' });
 
             //reactivate the selected item by loop through them and look for the one
             //that has the span arrow
@@ -58,7 +83,10 @@
             });
 
         }
-    ).click(function () {
+    )
+
+
+        $('div#slideshow-carousel li a').click(function () {
 
         //remove the span.arrow
         $('span.arrow').remove();
@@ -66,17 +94,83 @@
         //append it to the current item        
         $(this).append('<span class="arrow"></span>');
 
-        //remove the active class from the slideshow main
-        $('div#slideshow-main li').removeClass('active');
+        //alert("I here");
+        var slideNumber = $(this).attr("id");
 
-        //display the main image by appending active class to it.        
-        $('div#slideshow-main li.' + $(this).attr('rel')).addClass('active');
+        saveSlide();
+        // check on temp
+        var type = $(this).parent('li').attr("id");
+        var imgUrl = document.getElementById("img" + slideNumber);
+        
+            imgUrl.setAttribute("src", background);
+            $(this).parent('li').attr("id", "real");
+
+
+        var img = document.createElement('img');
+        img.setAttribute("src", imgUrl.getAttribute("src"));
+        currentSlide = slideNumber;
+        pw.imageLoad(img);
+
+
+        //var zxc = $(this).parent('li').attr("id");
+
+
 
         return false;
     });
 
 
     });
+
+
+//    function createNewSlide(){
+//        var startList = document.getElementById("carousel");
+//        slideCount++;
+//        var list = document.createElement("li");
+//        var link = document.createElement("a");
+//        link.setAttribute("id", slideCount);
+//        link.setAttribute("href", "#");
+//        link.setAttribute("rel", "");
+//        var img = document.createElement("img");
+//        img.setAttribute("width", 206);
+//        img.setAttribute("height", 95);
+//        img.setAttribute("id", "img" + slideCount);
+//        img.setAttribute("src", newSlide);
+//        list.setAttribute("id", "temp");
+//        link.appendChild(img);
+//        list.appendChild(link);
+//        startList.appendChild(list);
+//    }
+
+    function createStandartSlides() {
+        slideCount = 3;
+        var startList = document.getElementById("carousel");
+        for (var i = 1; i < 4; i++) {
+            var list = document.createElement("li");
+            
+            var link = document.createElement("a");
+            link.setAttribute("id", i);
+            link.setAttribute("href", "#");
+            link.setAttribute("rel", "");
+            var img = document.createElement("img");
+            img.setAttribute("width", 206);
+            img.setAttribute("height", 95);
+            img.setAttribute("id", "img" + i);
+            if (i < 2) {
+                img.setAttribute("src", background);
+                list.setAttribute("id", "real");
+            }
+            else {
+                img.setAttribute("src", newSlide);
+                list.setAttribute("id", "temp");
+            }
+            link.appendChild(img);
+            list.appendChild(link);
+            startList.appendChild(list);
+        }
+        
+    }
+
 
 
     //Carousel Tweaking
@@ -91,17 +185,72 @@
         });
     }
 
+    function saveSlide() {
+        pw.imageSave('image/jpeg');
+    }
+
+    function saveHandler(ev) {
+        //alert("Save slide " + currentSlide);
+        // Cancel the default action of the event.
+        ev.preventDefault();
+
+        var slide = document.getElementById("img" + currentSlide);
+        slide.setAttribute("src", ev.dataURL);
+        tempImage = ev.dataURL;
+    }
+
+    function update() {
+
+        var img = document.createElement('img');
+        img.setAttribute("src", "../../Content/486984.JPG");
+        
+        pw.imageLoad(img);
+    }
+
+
+    function trySave() {
+        var temp=document.getElementById("carousel");
+        var a = new Array();
+        var count = 3;
+
+        
+        for (var i = 1; i <= count; i++) {
+            var temp = document.getElementById("img" + i);
+            a[i] = temp.getAttribute("src");
+        }
+        $.ajax({
+            type: 'POST',
+            url: "/Slide/Save",
+            data: { name: a },
+            traditional: true,
+            success: function (data) {
+                alert('in student');
+            },
+            error: function (data) {
+                alert("not in student");
+            }
+                });
+//        var slides = ;
+//        $.post("/Slide/Save", slides, null, "json");
+        
+    }
+
 </script>
 
-<div id="slideshow-main"></div>
 
+<div style="height:600px; margin:0px;padding:0px;">
 
 <div id="slideshow-carousel">				
 			  <ul id="carousel" class="jcarousel jcarousel-skin-tango">
-				<li><a href="#" rel="p1"><img src="../../Content/slide/images/1.gif" width="206" height="95" alt="#"/></a></li>
-				<li><a href="#" rel="p2"><img src="../../Content/slide/images/2.gif" width="206" height="95" alt="#"/></a></li>
-                <li><a href="#" rel="p2"><img src="../../Content/slide/images/2.gif" width="206" height="95" alt="#"/></a></li>
-                <li><a href="#" rel="p2"><img src="../../Content/slide/images/2.gif" width="206" height="95" alt="#"/></a></li>
-                <li><a href="#" rel="p2"><img src="../../Content/slide/images/2.gif" width="206" height="95" alt="#"/></a></li>
+@*				<li><a id="1" href="#" rel=""><img src="../../Content/slide/images/background.jpg" width="206" height="95" id="img1" /></a></li>
+				<li><a id="2" href="#" rel=""><img src="../../Content/slide/images/new_slide.gif" width="206" height="95" id="img2" /></a></li>
+                <li><a id="3" href="#" rel=""><img src="../../Content/slide/images/new_slide.gif" width="206" height="95" id="img3"  /></a></li>*@
 			  </ul>
-		</div>
+</div>
+
+<div id="PaintWebTarget" style="position:relative; float:left; margin-left:100px"></div>
+<button onclick="save()" ondblclick="save()">Save</button>
+<button onclick="update()" ondblclick="update()">Update</button>
+
+<button onclick="trySave()" ondblclick="trySave()">TrySave</button>
+</div>
