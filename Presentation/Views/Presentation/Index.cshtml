@@ -5,6 +5,12 @@
 }
 
 <h2>My Presentations</h2>
+<link href=@Url.Content("~/Content/ratings/jquery.rating.css") rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+<script type="text/javascript">
+window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1.6.2.min.js"><\/script>');
+</script>
+<script type="text/javascript" src="../../Content/ratings/jquery.rating-2.0.min.js"></script>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -14,8 +20,9 @@
         <th>Name</th>
         <th>Description</th>
         <th>Tags</th>
+        <th>Rating</th>
         <th></th>
-        <th></th>		
+		<th></th>
     </tr>
     
 @foreach (var item in Model) {
@@ -29,6 +36,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.Tags)
         </td>
+		<td>
+			<div class="rating" >			
+			@{
+				string rate = item.AverageRating;
+			}
+				<input type="hidden" name="val" value=@rate />					
+			</div>            
+        </td>
+
             @if(Request.IsAuthenticated) {
                 <td>                
                     @Html.ActionLink("Edit", "Edit", new { id=item.PresentationId })
@@ -41,3 +57,15 @@
 }
 
 </table>
+<script>
+   $('div.rating').rating({
+	fx: 'full',
+       image: '../Content/ratings/images/stars.png',
+       loader: '../Content/ratings/images/ajax-loader.gif',
+	   url: 'rating.php',
+	   readOnly: true,
+       callback: function(responce){           
+           this.vote_success.fadeOut(2000);
+       }
+});
+</script>

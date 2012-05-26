@@ -185,7 +185,7 @@ namespace Presentation.Controllers
                 model.ViewType = ViewType;
                 return View(model);
             }
-            return View();
+            return RedirectToAction("../Home/Index");
         }
 
         [HttpPost]

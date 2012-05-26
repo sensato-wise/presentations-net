@@ -26,9 +26,9 @@ namespace Presentation.Models
         public string UserName { get; set; }
         [NotMapped]
         public IEnumerable<SlideModel> Slides { get; set; }
-        [NotMapped]
-        public double AverageRating { get; set; }
 
-      
+        public ICollection<RatingsModel> Ratings { get; set; }
+        [NotMapped]
+        public string AverageRating { get { return "1"; } set{} }      
     }
 }
