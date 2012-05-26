@@ -14,5 +14,8 @@ namespace Presentation.Models
         public int PresentationId { get; set; }
         public int SlideNumber { get; set; }
         public byte[] Data { get; set; }
+
+
+        
     }
 }
