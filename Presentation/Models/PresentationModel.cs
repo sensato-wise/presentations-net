@@ -28,5 +28,7 @@ namespace Presentation.Models
         public IEnumerable<SlideModel> Slides { get; set; }
         [NotMapped]
         public double AverageRating { get; set; }
+
+      
     }
 }

@@ -174,6 +174,38 @@ namespace Presentation.Controllers
             return View();
         }
 
+        [Authorize()]
+        public ActionResult ChangeRole(string Name, string ViewType)
+        {
+            var user = Membership.GetUser(Name);
+            if (User.IsInRole("Admin") && User.Identity.Name != user.UserName)
+            {
+                var model = new UserEditModel();
+                model.UserName = Name;
+                model.ViewType = ViewType;
+                return View(model);
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult ChangeRole(UserEditModel model)
+        {
+            var user = Membership.GetUser(model.UserName);
+            string[] roles = Roles.GetRolesForUser(user.UserName);
+            string newRole = "User";
+            if (roles[0] == "User") newRole = "Admin";
+            Roles.RemoveUserFromRoles(model.UserName, roles);
+            Roles.AddUserToRole(model.UserName, newRole);
+            return RedirectToAction("ChangeRoleSuccess");
+        }
+
+        public ActionResult ChangeRoleSuccess()
+        {
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             db.Dispose();
