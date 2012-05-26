@@ -41,5 +41,12 @@ namespace Presentation.Controllers
             }
             return View(presentations);            
         }
+
+        [HttpPost]
+        public ActionResult Vote(Guid UserId, int PresentationId, string Rating)
+        {
+            repository.AddNewVote(UserId, PresentationId, Int32.Parse(Rating.Remove(0, 13)));              
+            return null;
+        }
     }
 }

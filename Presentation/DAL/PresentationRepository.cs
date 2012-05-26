@@ -15,18 +15,13 @@ namespace Presentation.DAL
         private UserContext context;
         private DbSet<PresentationModel> dbSet;
         private DbSet<Tag> dbSetTag;
-
-        // added by algol
-        private DbSet<RatingsModel> dbRatings;
-        private DbSet<SlideModel> dbSlides;
-
+        private DbSet<RatingsModel> dbRatings;        
         public PresentationRepository()
         {
             this.context = new UserContext();
             this.dbSet = context.Set<PresentationModel>();
             this.dbSetTag = context.Set<Tag>();
-            this.dbRatings = context.Set<RatingsModel>();
-            this.dbSlides = context.Set<SlideModel>();
+            this.dbRatings = context.Set<RatingsModel>();            
         }
 
         public IEnumerable<Models.PresentationModel> GetPresentations(Guid userId)
@@ -50,6 +45,24 @@ namespace Presentation.DAL
         {
             return new PresentationModel();
         }
+
+        public void AddNewVote(Guid UserId, int PresentationId, float Rating)
+        {
+            var rating = new RatingsModel();
+            rating.PresentationId = PresentationId;
+            rating.UserId = UserId;
+            rating.RatingValue = Rating;
+            dbRatings.Add(rating);
+            context.Entry(rating).State = EntityState.Modified;            
+            var presentation = GetPresentation(PresentationId);
+            var user = context.Users.Find(UserId);
+            presentation.Ratings.Add(rating);
+            context.Entry(presentation).State = EntityState.Modified;
+            user.Ratings.Add(rating);
+            context.Entry(user).State = EntityState.Modified;
+            
+        }
+
 
         public void DeletePresentation(int id)
         {
@@ -139,12 +152,10 @@ namespace Presentation.DAL
         }
 
         public Guid GetUserGUID(string name)
-        {
-            DbSet<UserModel> dbSet = context.Set<UserModel>();            
-            var users = dbSet.Where(i => i.Name == name).ToList();
-            if (users != null)
-            {
-                UserModel user = users[0];
+        {            
+            var user = context.Users.Where(i => i.Name == name).First();
+            if (user != null)
+            {                
                 return user.UserId;
             }
             else
@@ -205,22 +216,6 @@ namespace Presentation.DAL
         public string GetUserNameById(Guid id)
         {
             return context.Users.First(i => i.UserId == id).Name;
-        }
-
-        public IEnumerable<SlideModel> GetSlidesByPresentationId(int PresentationId)
-        {
-            //
-            return null;
-        }
-
-        public int GetAveragePresentationRating(int PresentationId)
-        {
-            return 0;
-        }
-                
-        private IEnumerable<PresentationModel> GetMarkedPresentationsById(Guid UserId)
-        {
-            return null;
         }
     }
 }

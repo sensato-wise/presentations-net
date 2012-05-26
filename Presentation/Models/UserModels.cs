@@ -7,20 +7,25 @@ using System.Web.Security;
 
 namespace Presentation.Models
 {
-    [Table("aspnet_Users")]    
+    [Table("aspnet_Users")]
     public class UserModel
     {
         [Key]
         [Column("UserId")]
-
-        public Guid UserId { get; set; }
+        public Guid UserId { get; set; }      
 
         [Column("UserName")]
         public string Name { get; set; }
 
+      //  [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+       // [Column("UserIntId")]
+       // public int UserIntId { get; set; }
+
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        [Column("UserIntId")]
-        public int UserIntId { get; set; }
+        [Column("ThemeId")]
+        public int ThemeId { get; set; }
+
+        public virtual ICollection<RatingsModel> Ratings { get; set; }
 
         //[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         //[Column("UserIntId")]
@@ -42,9 +47,9 @@ namespace Presentation.Models
         public string PasswordQuestion { get; set; }
         public string PasswordAnswer { get; set; }
         public DateTime? CreateDate { get; set; }
-        public int ThemeId { get; set; }
+                      
         [NotMapped]
-        public string UserRole { get { return Roles.GetRolesForUser(Membership.GetUser((object) UserId).UserName).First(); } }
+        public string UserRole { get { return Roles.GetRolesForUser(Membership.GetUser((object)UserId).UserName).First(); } }
     }
 
      public class UserEditModel

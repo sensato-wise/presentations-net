@@ -23,9 +23,9 @@ window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1
         <th>Created By</th>
 		@if(Request.IsAuthenticated) {
 			<th>Rating</th>
-			<th></th>			
+			<th></th>
 			<th>Vote</th>
-		}        
+		}
     </tr>
 
 @foreach (var item in Model) {
@@ -43,30 +43,43 @@ window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
 		<td>
-			<div class="rating" >						
-				<input type="hidden" class="vote-id" value="voteID"/>
+		@if (item.AverageRating!=null){
+			<div class="StaticRating" >
+				<input type="hidden" name="val" value=@item.AverageRating />
 			</div>
+		}
 		</td>
             @if(Request.IsAuthenticated) {
                 <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.PresentationId })
 				</td>
-				<td>
-					<div class="rating" >									
-						<input type="hidden" class="vote-id" value="voteID"/>
-					</div>  											
-				</td>             
-            }		
+				<td>	
+					<div class="rating" id="@item.PresentationId" >
+						<input class="rateValue" name="val" value="1" />
+					</div>				
+					<script>
+					$('#@item.PresentationId').filter('div.rating').rating({					
+						fx: 'full',
+						image: '../Content/ratings/images/stars.png',
+						loader: '../Content/ratings/images/ajax-loader.gif',					
+						    click: function (event, ui) {							
+			                $.post("/Search/Vote",
+							{ UserId: "@item.UserId", PresentationId: "@item.PresentationId",
+							Rating: $('#@item.PresentationId').children().children().filter('.vote-success').text() },
+							function () {});}
+						});								
+					</script>				
+				</td>	 
+			}           	
     </tr>
 }
 </table>
 <script>
-   $('div.rating').rating({
+   $('div.StaticRating').rating({
 	fx: 'full',
        image: '../Content/ratings/images/stars.png',
        loader: '../Content/ratings/images/ajax-loader.gif',
-	   url: 'rating.php',
-
+	   readOnly: true,
        callback: function(responce){           
            this.vote_success.fadeOut(2000);
        }

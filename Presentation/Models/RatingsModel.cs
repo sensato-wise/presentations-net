@@ -12,6 +12,6 @@ namespace Presentation.Models
         [Key]
         public int PresentationId { get; set; }
         public Guid UserId { get; set; }
-        public int RatingValue { get; set; }
+        public float RatingValue { get; set; }        
     }
 }

@@ -27,8 +27,8 @@ namespace Presentation.Models
         [NotMapped]
         public IEnumerable<SlideModel> Slides { get; set; }
 
-        public ICollection<RatingsModel> Ratings { get; set; }
+        public virtual ICollection<RatingsModel> Ratings { get; set; }
         [NotMapped]
-        public string AverageRating { get { return "1"; } set{} }      
+        public string AverageRating { get { return "3"; } set{} }      
     }
 }

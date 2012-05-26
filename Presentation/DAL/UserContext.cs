@@ -5,9 +5,11 @@ using System.Web;
 using System.Data.Entity;
 using Presentation.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Infrastructure;
 
 namespace Presentation.Model
 {
+    
     public class UserContext : DbContext
     {
         public DbSet<UserModel> Users { get; set; }
@@ -15,8 +17,9 @@ namespace Presentation.Model
         public DbSet<PresentationModel> Presentation { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
-        // added by algol
+        // added by algol        
+        [DatabaseGenerated(System.ComponentModel.DataAnnotations.DatabaseGeneratedOption.Computed)]    
         public DbSet<RatingsModel> Ratings { get; set; }
-        public DbSet<SlideModel> Slides { get; set; }
+        public DbSet<SlideModel> Slides { get; set; }        
     }
 }

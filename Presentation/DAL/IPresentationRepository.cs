@@ -18,8 +18,8 @@ namespace Presentation.DAL
         void UpdatePresentation(PresentationModel presentation);
         void InsertPresentation(PresentationModel presentation);
         void Save();
-
-        // added by algol
-        string GetUserNameById(Guid id);        
+        // added by algol                
+        void AddNewVote(Guid UserId, int PresentationId, float Rating);
+        string GetUserNameById(Guid id);
     }
 }

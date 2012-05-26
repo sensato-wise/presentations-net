@@ -31,9 +31,8 @@ namespace Presentation.Controllers
         {
             var user = Membership.GetUser(Name);
             if (User.IsInRole("Admin") || User.Identity.Name == user.UserName)
-            {
-                var userModel = db.Users.Find(user.ProviderUserKey);
-                var userDetailsModel = db.UserDetails.Find(userModel.UserId);
+            {                
+                var userDetailsModel = db.UserDetails.Find(user.ProviderUserKey);
                 if (userDetailsModel != null)
                 {
                     var model = new UserEditModel();
