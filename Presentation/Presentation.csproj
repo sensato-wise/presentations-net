@@ -93,10 +93,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\WebPresentation.mdf" />
-    <Content Include="App_Data\WebPresentation_log.LDF">
-      <DependentUpon>WebPresentation.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\336994.JPG" />
     <Content Include="Content\486984.JPG" />
     <Content Include="Content\demo\slideshow.css" />
@@ -137,6 +133,7 @@
     <Content Include="Content\themeGreen\bg.jpg" />
     <Content Include="Content\themeGreen\Site.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\background.js" />
     <Content Include="Scripts\base64.js" />
     <Content Include="Scripts\canvas2image.js" />
     <Content Include="Scripts\interfaces\default\style.css" />
@@ -197,7 +194,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -232,7 +231,7 @@
     <Content Include="Views\Shared\_UserPanel.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Content\settings\config-example.json" />
+    <None Include="Content\slide\settings\config-example.json" />
     <None Include="Scripts\colors\windows.json" />
     <None Include="Scripts\config-example.json" />
     <None Include="Scripts\lang\en.json" />
@@ -245,12 +244,12 @@
     <Content Include="Views\Slide\Edit.cshtml" />
     <Content Include="Views\Slide\Temp.cshtml" />
     <Content Include="Views\Slide\Save.cshtml" />
+    <Content Include="Views\Slide\GetSlides.cshtml" />
     <None Include="Views\User\ChangeRole.cshtml" />
     <None Include="Views\User\ChangeRoleSuccess.cshtml" />
     <None Include="Views\User\DeleteSuccess.cshtml" />
     <None Include="Views\User\ResetPassword.cshtml" />
     <None Include="Views\User\ResetPasswordSuccess.cshtml" />
-    <Content Include="Views\ViewPage1.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

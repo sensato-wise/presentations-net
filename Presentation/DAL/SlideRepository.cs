@@ -13,23 +13,21 @@ namespace Presentation.DAL
     {
 
         private UserContext context;
-        private DbSet<SlideModel> dbSlides;
 
         public SlideRepository()
         {
             this.context = new UserContext();
-            this.dbSlides = context.Set<SlideModel>();
         }
 
         public IEnumerable<SlideModel> GetSlides(int presentationId)
         {
-            var slides = dbSlides.Where(i => i.PresentationId == presentationId);
+            var slides = context.Slides.Where(i => i.PresentationId == presentationId);
             return slides.ToList();
         }
 
         public SlideModel GetSlide(int presentationId, int number)
         {
-            var slides = dbSlides.Where(i => (i.PresentationId == presentationId)&&
+            var slides = context.Slides.Where(i => (i.PresentationId == presentationId)&&
                 (i.SlideNumber == number)).ToList();
             if (slides.Count > 0)
                 return (slides[0]);
