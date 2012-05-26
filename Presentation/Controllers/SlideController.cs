@@ -35,26 +35,23 @@ namespace Presentation.Controllers
 
         public ActionResult Temp(int? id)
         {
-            //if (id.HasValue)
-            //{
-            //    return View(slideRepository.GetSlides(id.Value));
-            //}
-            //else
-            //{
-            //    var slides = slideRepository.GetSlides(presentationId);
-            //    return View(slides);
-            //}
-
-            PresentationModel model = new PresentationModel();
-            model.PresentationId = 1;
-            return View(model);
+            if (id.HasValue)
+                presentationId = id.Value;
+            else
+                presentationId = 1;
+            return View();
         }
 
 
 
-        public ActionResult GetSlides()
+        public ActionResult GetSlides(int? id)
         {
-            var slides = slideRepository.GetSlides(presentationId);
+            if (!id.HasValue)
+            {
+                id = 1;
+            }
+            presentationId = id.Value;
+            var slides = slideRepository.GetSlides(id.Value);
             string[] images = new string[slides.Count()];
             int i = 0;
             foreach (var slide in slides)
