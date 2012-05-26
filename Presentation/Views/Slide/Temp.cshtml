@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Presentation.Models.PresentationModel
+@{
     ViewBag.Title = "Temp";
 
     Html.Assets().Styles.Add("/Content/slide/jquery.jcarousel.css");
@@ -34,11 +35,52 @@
         pw.init();
         pw.events.add('imageSave', saveHandler);
 
+
+
+
+        loadSlides();
+        // end paint web
+        //createStandartSlides();
+
         
 
-        // end paint web
-        createStandartSlides();
 
+    });
+    
+
+        function loadSlides() {
+            $.ajax({
+                type: 'GET',
+                url: "/Slide/GetSlides",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                success: function (data) {
+                    //alert('in student');
+                    createLoadedSlides(data);
+                    
+                },
+                error: function (data) {
+
+                }
+            });
+    }
+
+    function createLoadedSlides(data) {
+        for (var i = 0; i < data.length; ++i) {
+            createNewSlide(data[i]);
+        }
+        if (slideCount == 0)
+            createStandartSlides();
+        else {
+            for (var j = 0; j < 2; ++j)
+                createNewSlide(newSlide);
+        }
+        update();
+    }
+
+
+    function update() {
         //jCarousel Plugin
         $('#carousel').jcarousel({
             vertical: true, //display vertical carousel
@@ -105,9 +147,9 @@
             imgUrl.setAttribute("src", tempImage);
             $(this).parent('li').attr("id", "real");
 
-            if (slideNumber == slideCount) {
-                createNewSlide();
-            }
+            //            if (slideNumber == slideCount) {
+            //                createNewSlide();
+            //            }
         }
         var img = document.createElement('img');
         img.setAttribute("src", imgUrl.getAttribute("src"));
@@ -116,11 +158,9 @@
         return false;
     });
 
+    }
 
-    });
-
-
-    function createNewSlide(){
+    function createNewSlide(image){
         var startList = document.getElementById("carousel");
         slideCount++;
         var list = document.createElement("li");
@@ -132,7 +172,7 @@
         img.setAttribute("width", 206);
         img.setAttribute("height", 95);
         img.setAttribute("id", "img" + slideCount);
-        img.setAttribute("src", newSlide);
+        img.setAttribute("src", image);
         list.setAttribute("id", "temp");
         link.appendChild(img);
         list.appendChild(link);
@@ -200,7 +240,7 @@
         $.ajax({
             type: 'POST',
             url: "/Slide/Save",
-            data: { name: imageArray },
+            data: { images: imageArray },
             traditional: true,
             success: function (data) {
                 alert('in student');
@@ -228,6 +268,9 @@
 			  </ul>
 </div>
 
+
+
+
 <div id="PaintWebTarget" style="position:relative; float:left; margin-left:100px"></div>
 <div class="clear"></div>
 <button onclick="saveSlide()" ondblclick="save()">Save</button>
@@ -235,4 +278,6 @@
 <button onclick="createNewSlide()" ondblclick="createNewSlide()">CreateNewSlide</button>
 
 <button onclick="trySave()" ondblclick="trySave()">TrySave</button>
+
+<button onclick="loadSlides()" ondblclick="loadSlides()">loadSlides</button>
 </div>

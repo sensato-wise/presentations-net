@@ -93,10 +93,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\WebPresentation.mdf" />
-    <Content Include="App_Data\WebPresentation_log.LDF">
-      <DependentUpon>WebPresentation.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\336994.JPG" />
     <Content Include="Content\486984.JPG" />
     <Content Include="Content\demo\slideshow.css" />
@@ -198,7 +194,9 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -246,6 +244,7 @@
     <Content Include="Views\Slide\Edit.cshtml" />
     <Content Include="Views\Slide\Temp.cshtml" />
     <Content Include="Views\Slide\Save.cshtml" />
+    <Content Include="Views\Slide\GetSlides.cshtml" />
     <None Include="Views\User\ChangeRole.cshtml" />
     <None Include="Views\User\ChangeRoleSuccess.cshtml" />
     <None Include="Views\User\DeleteSuccess.cshtml" />

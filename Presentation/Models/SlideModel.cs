@@ -13,9 +13,18 @@ namespace Presentation.Models
         public int Id { get; set; }
         public int PresentationId { get; set; }
         public int SlideNumber { get; set; }
-        public byte[] Data { get; set; }
+        public string Data { get; set; }
 
 
+        public SlideModel()
+        {
+        }
+
+        public SlideModel(int presentationId, int slideNumber)
+        {
+            PresentationId = presentationId;
+            SlideNumber = slideNumber;
+        }
         
     }
 }
