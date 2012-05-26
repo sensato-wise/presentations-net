@@ -17,7 +17,6 @@ namespace Presentation.Controllers
         private IPresentationRepository repository;
         private ITagsRepository tagRepository;
 
-
         public PresentationController()
         {
             this.repository = new PresentationRepository();
@@ -112,17 +111,21 @@ namespace Presentation.Controllers
         // POST: /Presentation/Edit/5
 
         [HttpPost]
+        [Authorize()]
         public ActionResult Edit(PresentationModel presentation)
         {
-            if (ModelState.IsValid)
+            if (Request.IsAuthenticated)
             {
-                repository.UpdatePresentation(presentation);
-                repository.Save();
-                return RedirectToAction("Index");
+                presentation.UserId = repository.GetUserGUID(User.Identity.Name);
+                if (ModelState.IsValid)
+                {
+                    repository.UpdatePresentation(presentation);
+                    repository.Save();
+                    return RedirectToAction("Index");
+                }
             }
             return View(presentation);
         }
-
         //
         // GET: /Presentation/Delete/5
 

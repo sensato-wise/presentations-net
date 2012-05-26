@@ -42,7 +42,7 @@ namespace Presentation.Models
         public string PasswordQuestion { get; set; }
         public string PasswordAnswer { get; set; }
         public DateTime? CreateDate { get; set; }
-        
+        public int ThemeId { get; set; }
         [NotMapped]
         public string UserRole { get { return Roles.GetRolesForUser(Membership.GetUser((object) UserId).UserName).First(); } }
     }

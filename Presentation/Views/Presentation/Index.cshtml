@@ -44,7 +44,6 @@ window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1
 				<input type="hidden" name="val" value=@rate />					
 			</div>            
         </td>
-
             @if(Request.IsAuthenticated) {
                 <td>                
                     @Html.ActionLink("Edit", "Edit", new { id=item.PresentationId })
@@ -52,7 +51,7 @@ window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1
 				<td>
                     @Html.ActionLink("Delete", "Delete", new { id=item.PresentationId })
 				</td>
-                }				
+              }				
     </tr>
 }
 
