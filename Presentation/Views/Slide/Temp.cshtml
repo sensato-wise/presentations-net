@@ -88,69 +88,84 @@
 
         $('div#slideshow-carousel li a').click(function () {
 
-        //remove the span.arrow
-        $('span.arrow').remove();
+            //remove the span.arrow
+            $('span.arrow').remove();
 
-        //append it to the current item        
-        $(this).append('<span class="arrow"></span>');
+            //append it to the current item        
+            $(this).append('<span class="arrow"></span>');
 
-        //alert("I here");
-        var slideNumber = $(this).attr("id");
+            //alert("I here");
+            var slideNumber = $(this).attr("id");
 
-        saveSlide();
-        // check on temp
-        var type = $(this).parent('li').attr("id");
-        var imgUrl = document.getElementById("img" + slideNumber);
-        
-            imgUrl.setAttribute("src", background);
-            $(this).parent('li').attr("id", "real");
+            saveSlide();
+            // check on temp
+            var type = $(this).parent('li').attr("id");
+            var imgUrl = document.getElementById("img" + slideNumber);
+            if (type == "temp") {
+                imgUrl.setAttribute("src", background);
+                $(this).parent('li').attr("id", "real");
 
-
-        var img = document.createElement('img');
-        img.setAttribute("src", imgUrl.getAttribute("src"));
-        currentSlide = slideNumber;
-        pw.imageLoad(img);
-
-
-        //var zxc = $(this).parent('li').attr("id");
+                if (slideNumber == slideCount) {
+                    createNewSlide();
+                }
+            }
 
 
+            var img = document.createElement('img');
+            img.setAttribute("src", imgUrl.getAttribute("src"));
+            currentSlide = slideNumber;
+            pw.imageLoad(img);
 
-        return false;
+
+            //var zxc = $(this).parent('li').attr("id");
+
+
+
+            return false;
+        });
+
+
     });
 
 
-    });
+    function createNewSlide(){
+        var startList = document.getElementById("carousel");
+        slideCount++;
+        var list = document.createElement("li");
+        var link = document.createElement("a");
+        link.setAttribute("id", slideCount);
+        link.setAttribute("href", "");
+        link.setAttribute("rel", "");
+        var img = document.createElement("img");
+        img.setAttribute("width", 206);
+        img.setAttribute("height", 95);
+        img.setAttribute("id", "img" + slideCount);
+        img.setAttribute("src", newSlide);
+        list.setAttribute("id", "temp");
+        link.appendChild(img);
+        list.appendChild(link);
+        startList.appendChild(list);
 
 
-//    function createNewSlide(){
-//        var startList = document.getElementById("carousel");
-//        slideCount++;
-//        var list = document.createElement("li");
-//        var link = document.createElement("a");
-//        link.setAttribute("id", slideCount);
-//        link.setAttribute("href", "#");
-//        link.setAttribute("rel", "");
-//        var img = document.createElement("img");
-//        img.setAttribute("width", 206);
-//        img.setAttribute("height", 95);
-//        img.setAttribute("id", "img" + slideCount);
-//        img.setAttribute("src", newSlide);
-//        list.setAttribute("id", "temp");
-//        link.appendChild(img);
-//        list.appendChild(link);
-//        startList.appendChild(list);
-//    }
+        $('#carousel').jcarousel({
+            vertical: true, //display vertical carousel
+            scroll: 1,  //auto scroll
+            auto: 2,    //the speed of scrolling
+            wrap: 'last',   //go back to top when reach last item
+            initCallback: mycarousel_initCallback   //extra called back function
+        });
+
+    }
 
     function createStandartSlides() {
         slideCount = 3;
         var startList = document.getElementById("carousel");
-        for (var i = 1; i < 4; i++) {
+        for (var i = 1; i <= slideCount; i++) {
             var list = document.createElement("li");
             
             var link = document.createElement("a");
             link.setAttribute("id", i);
-            link.setAttribute("href", "#");
+            link.setAttribute("href", "");
             link.setAttribute("rel", "");
             var img = document.createElement("img");
             img.setAttribute("width", 206);
@@ -242,9 +257,11 @@
 
 <div id="slideshow-carousel">				
 			  <ul id="carousel" class="jcarousel jcarousel-skin-tango">
-@*				<li><a id="1" href="#" rel=""><img src="../../Content/slide/images/background.jpg" width="206" height="95" id="img1" /></a></li>
-				<li><a id="2" href="#" rel=""><img src="../../Content/slide/images/new_slide.gif" width="206" height="95" id="img2" /></a></li>
-                <li><a id="3" href="#" rel=""><img src="../../Content/slide/images/new_slide.gif" width="206" height="95" id="img3"  /></a></li>*@
+@*				<li><a id="1" href="" rel=""><img src="../../Content/slide/images/background.jpg" width="206" height="95" id="img1" /></a></li>
+				<li><a id="2" href="" rel=""><img src="../../Content/slide/images/new_slide.gif" width="206" height="95" id="img2" /></a></li>
+                <li><a id="3" href="" rel=""><img src="../../Content/slide/images/new_slide.gif" width="206" height="95" id="img3"  /></a></li>
+                <li><a id="3" href="" rel=""><img src="../../Content/slide/images/new_slide.gif" width="206" height="95" id="img3"  /></a></li>
+                <li><a id="3" href="" rel=""><img src="../../Content/slide/images/new_slide.gif" width="206" height="95" id="img3"  /></a></li>*@
 			  </ul>
 </div>
 
