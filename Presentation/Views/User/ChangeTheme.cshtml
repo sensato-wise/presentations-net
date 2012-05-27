@@ -7,14 +7,11 @@
 @using(Html.BeginForm("ChangeTheme")){
 <div>
  <fieldset>     
-	<table>
-	<tr><td><INPUT TYPE=RADIO id="th1" NAME=theme VALUE="1">Default (silver)</td></tr>
-	<tr><td><INPUT TYPE=RADIO id="th2" NAME=theme VALUE="2">Gray</td></tr>
-	<tr><td><INPUT TYPE=RADIO id="th3" NAME=theme VALUE="3">Green</td></tr>
-	<tr></tr>
-	    <INPUT TYPE="hidden" Name="Name" VALUE="@User.Identity.Name" />		
-	</table>
-	 </fieldset>
+	<p><INPUT TYPE=RADIO id="th1" NAME=theme VALUE="1">Default (silver)</p>
+	<p><INPUT TYPE=RADIO id="th2" NAME=theme VALUE="2">Gray</p>
+	<p><INPUT TYPE=RADIO id="th3" NAME=theme VALUE="3">Green</p>	
+	<INPUT TYPE="hidden" Name="Name" VALUE="@User.Identity.Name" />
+  </fieldset>
 	<INPUT TYPE="submit" VALUE="Change" />	
 	</div>
 	if(string.Equals(ViewData["Theme"],"1")){  

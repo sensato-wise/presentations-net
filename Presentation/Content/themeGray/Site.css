@@ -96,16 +96,16 @@ header h1, #header h1 {
     font-weight: bold;
     padding: 5px 0;
     margin: 0;
-    color: #fff;
+    color: #bbbbbb;
     border: none;
     line-height: 2em;
-    font-size: 32px !important;
-    text-shadow: 3px 3px 4px #111;
+    font-size: 43px !important;
+    text-shadow: 3px 3px 4px #aaaaaa;
 }
 
 #main {
     padding: 30px 30px 15px 30px;
-    background-color: #fff;
+    background-color: #999999;
     border-radius: 4px 0 0 0;
     -webkit-border-radius: 4px 0 0 0;
     -moz-border-radius: 4px 0 0 0;
@@ -113,7 +113,7 @@ header h1, #header h1 {
 
 footer, 
 #footer {
-    background-color: #fff;
+    background-color: #cccccc;
     color: #999;
     padding: 10px 0;
     text-align: center;
@@ -128,7 +128,7 @@ footer,
 /* TAB MENU   
 ----------------------------------------------------------*/
 ul#menu {
-    border-bottom: 5px #5C87B2 solid;
+    border-bottom: 5px #bbbbbb solid;
     padding: 0 0 2px;
     position: relative;
     margin: 0;
@@ -153,26 +153,26 @@ ul#menu li a {
     font-weight: bold;
     text-decoration: none;
     line-height: 2.8em;
-    background-color: #e8eef4;
-    color: #034af3;
+    background-color: #bbbbbb;
+    color: #555555;
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 0 0;
     -moz-border-radius: 4px 4px 0 0;
 }
 
 ul#menu li a:hover {
-    background-color: #a8eef4;
+    background-color: #cccccc;
     text-decoration: none;
 }
 
 ul#menu li a:active {
-    background-color: #0f7af3;
+    background-color: #eeeeee;
     text-decoration: none;
 }
 
 ul#menu li.selected a {
     background-color: #fff;
-    color: #034af3;
+    color: #555555;
 }
 
 /* FORM LAYOUT ELEMENTS   
