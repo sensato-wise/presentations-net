@@ -28,19 +28,19 @@
 
             $.ajax({
                 type: 'GET',
-                url: "/Slide/GetSlides",
+                url: "/Presentation/GetSlides",
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 traditional: true,
                 data: { id: presentId },
                 success: function (data) {
-                    alert('in student');
+                    
                     createLoadedSlides(data);
                     setStyles();
 
                 },
                 error: function (data) {
-                    alert("Error");
+                    alert("Error get slides");
                 }
             });
         }

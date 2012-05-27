@@ -51,7 +51,7 @@ window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1
 		</td>
             @if(Request.IsAuthenticated) {
                 <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.PresentationId })
+                <a href= @Href("/Presentation/SlideShow", new { id = item.PresentationId })>Show</a>
 				</td>
 				<td>						
 					@if(@item.IsRatedByUser){

@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Temp";
+    ViewBag.Title = "Create Slides";
 
     Html.Assets().Styles.Add("/Content/slide/jquery.jcarousel.css");
     Html.Assets().Styles.Add("/Content/slide/skin.css");
@@ -39,6 +39,6 @@
 <div id="PaintWebTarget" style="position:relative; float:left; margin-left:100px"></div>
 <div class="clear"></div>
 
-<button onclick="trySave()" ondblclick="trySave()">Save Presentation</button>
+<button onclick="trySave()" runat="server">Save Presentation</button>
 <input id="presentationId" type="hidden" value = "@Request.Params["id"]" />
 </div>

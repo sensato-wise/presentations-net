@@ -3,7 +3,7 @@ function loadSlides() {
 
     $.ajax({
         type: 'GET',
-        url: "/Slide/GetSlides",
+        url: "/Presentation/GetSlides",
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         traditional: true,
@@ -14,18 +14,22 @@ function loadSlides() {
 
         },
         error: function (data) {
-            alert("Error");
+            alert("Error in request GetSlides");
         }
     });
 }
 
 function createLoadedSlides(data) {
-    for (var i = 0; i < data.length; ++i) {
-        createNewSlide(data[i], "real");
-    }
-    if (slideCount == 0)
+
+    if ((data == null) || (data.length == 0))
+    {
         createStandartSlides();
-    else {
+    }
+    else
+    {
+        for (var i = 0; i < data.length; ++i) {
+            createNewSlide(data[i], "real");
+        }
         for (var j = 0; j < 2; ++j)
             createNewSlide(newSlide, "temp");
     }
@@ -187,7 +191,10 @@ function saveHandler(ev) {
 
 
 
+
+
 function trySave() {
+    var presentId = $('#presentationId').attr("value");
     saveSlide();
     var list = document.getElementById("carousel");
     var imageArray = new Array();
@@ -203,14 +210,48 @@ function trySave() {
     }
     $.ajax({
         type: 'POST',
-        url: "/Slide/Save",
-        data: { images: imageArray },
+        url: "/Presentation/Save",
+        data: { images: imageArray, id: presentId },
         traditional: true,
         success: function (data) {
-            alert('in student');
+            //alert('in student');
+            var presentId = $('#presentationId').attr("value");
+            location = "Create?id=" + presentId;
         },
         error: function (data) {
-            alert("not in student");
+            alert("error in request Save slides");
+        }
+    });
+}
+
+
+function tryUpdate() {
+    var presentId = $('#presentationId').attr("value");
+    saveSlide();
+    var list = document.getElementById("carousel");
+    var imageArray = new Array();
+
+    for (var i = 1; i <= slideCount; i++) {
+        var j = list.childNodes[i];
+
+        if (j.getAttribute("id") == "real") {
+            var index = j.childNodes[0].getAttribute("id");
+            var source = document.getElementById("img" + index);
+            imageArray[i] = source.getAttribute("src");
+        }
+    }
+    $.ajax({
+        type: 'POST',
+        url: "/Presentation/Save",
+        data: { images: imageArray, id: presentId },
+        traditional: true,
+        success: function (data) {
+            //alert('in student');
+            var presentId = $('#presentationId').attr("value");
+            location = "Edit?id=" + presentId;
+        },
+        error: function (data) {
+            alert("error in request Save slides");
         }
     });
 }
