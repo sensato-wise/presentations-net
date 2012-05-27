@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "SlideShow";
+}
+
+
+	<link href="../../Content/slideShow/skitter.styles.css" type="text/css" media="all" rel="stylesheet" />
+	<link href="../../Content/slideShow/highlight.black.css" type="text/css" media="all" rel="stylesheet" />
+
+
+	<script src="../../Scripts/jquery-1.6.3.min.js"></script>
+	<script src="../../Scripts/jquery.easing.1.3.js"></script>
+	<script src="../../Scripts/jquery.animate-colors-min.js"></script>
+	
+	<script src="../../Scripts/jquery.skitter.min.js"></script>
+	<script src="../../Scripts/highlight.js"></script>
+    <script src="../../Scripts/background.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            loadSlides();
+        });
+
+
+
+
+        function loadSlides() {
+            var presentId = $('#presentationId').attr("value");
+
+            $.ajax({
+                type: 'GET',
+                url: "/Slide/GetSlides",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                traditional: true,
+                data: { id: presentId },
+                success: function (data) {
+                    alert('in student');
+                    createLoadedSlides(data);
+                    setStyles();
+
+                },
+                error: function (data) {
+                    alert("Error");
+                }
+            });
+        }
+
+        function setStyles() {
+            var options = {};
+
+            if (document.location.search) {
+                var array = document.location.search.split('=');
+                var param = array[0].replace('?', '');
+                var value = array[1];
+
+                if (param == 'animation') {
+                    options.animation = value;
+                }
+                else if (param == 'type_navigation') {
+                    if (value == 'dots_preview') {
+                        $('.border_box').css({ 'marginBottom': '40px' });
+                        options['dots'] = true;
+                        options['preview'] = true;
+                    }
+                    else {
+                        options[value] = true;
+                        if (value == 'dots') $('.border_box').css({ 'marginBottom': '40px' });
+                    }
+                }
+            }
+
+            $('.box_skitter_large').skitter(options);
+
+            // Highlight
+            $('pre.code').highlight({ source: 1, zebra: 1, indent: 'space', list: 'ol' });
+        }
+
+        function createLoadedSlides(data) {
+            for (var i = 0; i < data.length; ++i) {
+                createNewSlide(data[i]);
+            }
+        }
+        function createNewSlide(data) {
+            var li = document.createElement("li");
+            var link = document.createElement("a");
+            link.setAttribute("href", "#random");
+            var img = document.createElement("img");
+            img.setAttribute("src", data);
+            img.setAttribute("class", "random");
+            link.appendChild(img);
+            li.appendChild(link);
+            var list = document.getElementById("list");
+            list.appendChild(li);
+        }
+
+
+
+	</script>
+
+
+<h2>SlideShow</h2>
+
+
+<div class="border_box">
+	<div class="box_skitter box_skitter_large">
+		<ul id="list">
+			<li><a href="#cube"><img src="../../Content/slideShow/images/001.jpg" class="cube" /></a><div class="label_text"><p>cube</p></div></li>
+			<li><a href="#cubeRandom"><img  src="../../Content/slideShow/images/002.jpg" class="cubeRandom" /></a><div class="label_text"><p>cubeRandom</p></div></li>
+			
+		</ul>
+	</div>
+    <input id="presentationId" type="hidden" value = "@Request.Params["id"]" />
+</div>

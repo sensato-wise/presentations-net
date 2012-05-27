@@ -44,6 +44,14 @@ namespace Presentation.Controllers
 
 
 
+
+        public ActionResult SlideShow()
+        {
+            return View();
+        }
+
+
+
         public ActionResult GetSlides(int? id)
         {
             if (!id.HasValue)
@@ -61,6 +69,14 @@ namespace Presentation.Controllers
             }
             return Json(images, JsonRequestBehavior.AllowGet);
         }
+
+
+        public ActionResult Image()
+        {
+            return View();
+        }
+
+        
 
 
 
