@@ -29,6 +29,8 @@
     <fieldset>
         <legend>Presentation</legend>
         
+        
+
         <div class="editor-label">
             @Html.LabelFor(model => model.Name)
         </div>
@@ -51,6 +53,7 @@
         <p>
             <input id="save" type="submit" value="Create" runat="server" />
         </p>
+        <input type="hidden" name="presentationId" id="presentationId" value="@Request.Params["id"]" runat="server" />
     </fieldset>
 }
 

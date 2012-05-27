@@ -71,7 +71,6 @@
     <Compile Include="Controllers\PresentationController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SlideController.cs" />
-    <Compile Include="Controllers\SlideDisplayController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAL\IPresentationRepository.cs" />
     <Compile Include="DAL\ISlideRepository.cs" />
@@ -239,16 +238,12 @@
     <None Include="Scripts\config-example.json" />
     <None Include="Scripts\lang\en.json" />
     <None Include="Views\Admin\Dashboard.cshtml" />
-    <None Include="Views\SlideDisplay\Designer.cshtml" />
+    <Content Include="Views\Presentation\CreateSlides.cshtml" />
+    <Content Include="Views\Presentation\Save.cshtml" />
+    <Content Include="Views\Presentation\GetSlides.cshtml" />
+    <Content Include="Views\Presentation\EditSlides.cshtml" />
     <None Include="Views\Search\Index.cshtml" />
-    <None Include="Views\SlideDisplay\Show.cshtml" />
-    <None Include="Views\SlideDisplay\_SlideDisplay.cshtml" />
-    <Content Include="Views\Slide\Index.cshtml" />
-    <Content Include="Views\Slide\Edit.cshtml" />
-    <Content Include="Views\Slide\Temp.cshtml" />
-    <Content Include="Views\Slide\Save.cshtml" />
-    <Content Include="Views\Slide\GetSlides.cshtml" />
-    <Content Include="Views\Slide\SlideShow.cshtml" />
+    <Content Include="Views\Presentation\SlideShow.cshtml" />
     <Content Include="Views\Slide\Image.cshtml" />
     <None Include="Views\User\ChangeRole.cshtml" />
     <None Include="Views\User\ChangeRoleSuccess.cshtml" />
@@ -274,7 +269,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>4737</DevelopmentServerPort>
+          <DevelopmentServerPort>6496</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

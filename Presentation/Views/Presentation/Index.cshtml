@@ -23,6 +23,7 @@ window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1
         <th>Rating</th>
         <th></th>
 		<th></th>
+        <th></th>
     </tr>
     
 @foreach (var item in Model) {
@@ -36,17 +37,18 @@ window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1
         <td>
             @Html.DisplayFor(modelItem => item.Tags)
         </td>
-		<td>
+		<td style="width:200px">
 		@if (@item.IsRatedByOne){
-			<div class="rating" >									
+			<div class="rating" style="width:200px" >									
 				<input type="hidden" name="val" value="@item.AverageRating" />							
 			</div> 
 		}		
         </td>
             @if(Request.IsAuthenticated) {
-                <td>                
-                    @Html.ActionLink("Edit", "Edit", new { id=item.PresentationId })
+                <td>
+                    <a href= @Href("/Presentation/EditSlides", new { id = item.PresentationId })>Edit</a>
                 </td>
+                <td><a href= @Href("/Presentation/SlideShow", new { id = item.PresentationId })>Show</a></td>
 				<td>
                     @Html.ActionLink("Delete", "Delete", new { id=item.PresentationId })
 				</td>

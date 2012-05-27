@@ -16,11 +16,14 @@ namespace Presentation.Controllers
 
         private IPresentationRepository repository;
         private ITagsRepository tagRepository;
+        private ISlideRepository slideRepository;
+        
 
         public PresentationController()
         {
             this.repository = new PresentationRepository();
             this.tagRepository = new TagRepository();
+            this.slideRepository = new SlideRepository();
         }
 
         //
@@ -65,17 +68,28 @@ namespace Presentation.Controllers
         //
         // GET: /Presentation/Create
 
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
             if (Request.IsAuthenticated)
             {
-                return View();
+                if (!id.HasValue)
+                {
+                    var model = new PresentationModel();
+                    model.UserId = repository.GetUserGUID(User.Identity.Name);
+                    repository.InsertPresentation(model);
+                    repository.Save();
+                    return Redirect("CreateSlides?id=" + model.PresentationId);
+                }
+                else
+                    return View();
             }
             else
             {
                 return RedirectToAction("Index");
             }
         }
+
+
 
         //
         // POST: /Presentation/Create
@@ -85,17 +99,27 @@ namespace Presentation.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                presentation.UserId = repository.GetUserGUID(User.Identity.Name);
+                var existPresentation = CopyPresentation(presentation);
                 if (ModelState.IsValid)
                 {
-                    repository.InsertPresentation(presentation);
+                    repository.UpdatePresentation(existPresentation);
                     repository.Save();
-                    return RedirectToAction("../SlideDisplay/Designer", presentation);
+                    return RedirectToAction("Index");
                 }
             }
             return RedirectToAction("Index");
         }
 
+
+        private PresentationModel CopyPresentation(PresentationModel source)
+        {
+            int id = source.PresentationId;
+            var presentation = repository.GetPresentation(id);
+            presentation.Name = source.Name;
+            presentation.Description = source.Description;
+            presentation.Tags = source.Tags;
+            return presentation;
+        }
         //
         // GET: /Presentation/Edit/5
 
@@ -163,6 +187,80 @@ namespace Presentation.Controllers
             var tags = tagRepository.GetTags();
             return View(tags);
         }
+
+
+        #region work with slides
+
+        public ActionResult EditSlides(int id)
+        {
+            return View();
+        }
+
+
+        public ActionResult CreateSlides(int id)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CreateSlides()
+        {
+            return View();
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Save(string[] images, int id)
+        {
+            for (int i = 1; i < images.Length; ++i)
+            {
+                var slide = slideRepository.GetSlide(id, i);
+                if (slide == null)
+                {
+                    SlideModel newSlide = new SlideModel();
+                    newSlide.Data = images[i];
+                    newSlide.PresentationId = id;
+                    newSlide.SlideNumber = i;
+                    slideRepository.InsertSlide(newSlide);
+                    slideRepository.Save();
+                }
+                else
+                {
+                    slide.Data = images[i];
+                    slideRepository.UpdateSlide(slide);
+                    slideRepository.Save();
+                }
+            }
+            return null;
+        }
+
+        public ActionResult GetSlides(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return null;
+            }
+            var slides = slideRepository.GetSlides(id.Value);
+            string[] images = new string[slides.Count()];
+            int i = 0;
+            foreach (var slide in slides)
+            {
+                images[i] = slide.Data;
+                ++i;
+            }
+            return Json(images, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public ActionResult SlideShow()
+        {
+            return View();
+        }
+
+        #endregion // work with slides
+
+
+
+
 
         protected override void Dispose(bool disposing)
         {

@@ -99,7 +99,8 @@ namespace Presentation.DAL
 
         public void InsertPresentation(Models.PresentationModel presentation)
         {
-            ParseTags(presentation);
+            if(presentation.Tags != null)
+                ParseTags(presentation);
             context.Presentation.Add(presentation);
         }
 
