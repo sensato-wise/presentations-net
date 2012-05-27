@@ -35,6 +35,10 @@ namespace Presentation.Controllers
                 foreach (var presentationModel in presentations)
                 {
                     presentationModel.UserName = repository.GetUserNameById(presentationModel.UserId);
+                    presentationModel.AverageRating = repository.GetAverageRating(presentationModel.PresentationId);
+                    presentationModel.IsRatedByOne = presentationModel.AverageRating != null;
+                    presentationModel.IsRatedByUser = repository.IsRatedByUserId(presentationModel.PresentationId, userId);
+                    presentationModel.UserRate = repository.GetUserRating(presentationModel.PresentationId, userId);
                 }
                 return View(presentations);
             }

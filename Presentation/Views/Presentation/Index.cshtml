@@ -37,9 +37,9 @@ window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1
             @Html.DisplayFor(modelItem => item.Tags)
         </td>
 		<td>
-		@if (item.AverageRating!=null){
+		@if (@item.IsRatedByOne){
 			<div class="rating" >									
-				<input type="hidden" name="val" value=@item.AverageRating />							
+				<input type="hidden" name="val" value="@item.AverageRating" />							
 			</div> 
 		}		
         </td>
