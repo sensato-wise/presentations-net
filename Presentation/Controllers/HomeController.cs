@@ -8,7 +8,6 @@ using Presentation.Model;
 using System.Web.Security;
 using Presentation.DAL;
 
-
 namespace Presentation.Controllers
 {
     public class HomeController : Controller

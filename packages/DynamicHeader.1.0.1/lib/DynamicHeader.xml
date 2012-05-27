@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DynamicHeader</name>
+    </assembly>
+    <members>
+        <member name="M:DynamicHeader.DynamicHeaderHelper.DynamicHeader(System.Web.Mvc.HtmlHelper)">
+            <summary>Output references of .js files and .css files that registered from codes inside View.</summary>
+        </member>
+        <member name="T:DynamicHeader.DynamicHeaderModule">
+            <summary>
+            Install filter which replaced DynamicHeader signature to realize HTML par request.
+            </summary>
+        </member>
+        <member name="T:DynamicHeader.DynamicHeader">
+            <summary>Add references of JavaScript files and style sheet files into head elemenet at runtime.</summary>
+        </member>
+        <member name="M:DynamicHeader.DynamicHeader.GetInstance">
+            <summary>Get the instance of DynamicHeader at current request.</summary>
+        </member>
+        <member name="M:DynamicHeader.DynamicHeader.AddScript(System.String)">
+            <summary>Add a reference of JavaScript file path.</summary>
+            <param name="scriptPath">The path of JavaScript file to include, such as "~/Scripts/foo.js".</param>
+        </member>
+        <member name="M:DynamicHeader.DynamicHeader.AddStyleSheet(System.String)">
+            <summary>Add a reference if style sheet file path.</summary>
+            <param name="styleSheetPath">The path of .css file to include, such as "~/Content/foo.css".</param>
+        </member>
+    </members>
+</doc>
