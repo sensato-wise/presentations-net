@@ -10,8 +10,9 @@ namespace Presentation.Models
     public class RatingsModel
     {
         [Key]
-        public int PresentationId { get; set; }
-        public Guid UserId { get; set; }
-        public float RatingValue { get; set; }        
+        public long RatingId { get; set; }        
+        public int PresentId { get; set; }        
+        public Guid UserId { get; set; }        
+        public int RatingValue { get; set; }
     }
 }

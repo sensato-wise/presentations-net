@@ -80,7 +80,7 @@ namespace Presentation.Tests
             PresentationRepository target = new PresentationRepository(); // TODO: инициализация подходящего значения
             Guid UserId = new Guid("419edc31-ff6f-4385-a1a5-7ecb47806465"); // TODO: инициализация подходящего значения
             int PresentationId = 18; // TODO: инициализация подходящего значения
-            float Rating = 2F; // TODO: инициализация подходящего значения
+            int Rating = 2; // TODO: инициализация подходящего значения
             target.AddNewVote(UserId, PresentationId, Rating);
             Assert.Inconclusive("Невозможно проверить метод, не возвращающий значение.");
         }

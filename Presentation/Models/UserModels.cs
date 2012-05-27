@@ -17,22 +17,16 @@ namespace Presentation.Models
         [Column("UserName")]
         public string Name { get; set; }
 
-      //  [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-       // [Column("UserIntId")]
-       // public int UserIntId { get; set; }
-
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        [Column("ThemeId")]
-        public int ThemeId { get; set; }
-
-        public virtual ICollection<RatingsModel> Ratings { get; set; }
+        [Column("UserIntId")]
+        public int UserIntId { get; set; }
 
         //[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        //[Column("UserIntId")]
-        //public int UserIntId { get; set; }
+        //[Column("ThemeId")]
+        //public int ThemeId { get; set; }        
+        
         //[ForeignKey("UserId")]
-        //public virtual UserDetails UserDetails { get; set; }
-        //public virtual ICollection<aspnet_Membership> UserDetails { get; set; }
+        //public virtual UserDetails UserDetails { get; set; }        
     }
     
     [DisplayColumn("UserId")]    

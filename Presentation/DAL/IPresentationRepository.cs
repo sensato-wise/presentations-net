@@ -19,7 +19,10 @@ namespace Presentation.DAL
         void InsertPresentation(PresentationModel presentation);
         void Save();
         // added by algol                
-        void AddNewVote(Guid UserId, int PresentationId, float Rating);
+        void AddNewVote(Guid UserId, int PresentationId, int Rating);
         string GetUserNameById(Guid id);
+        bool IsRatedByUserId(int PresentationId, Guid UserId);
+        string GetAverageRating(int PresentationId);
+        int GetUserRating(int PresentationId, Guid UserId);
     }
 }

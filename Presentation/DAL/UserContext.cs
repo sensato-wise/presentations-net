@@ -17,9 +17,8 @@ namespace Presentation.Model
         public DbSet<PresentationModel> Presentation { get; set; }
         public DbSet<Tag> Tags { get; set; }
 
-        // added by algol        
-        [DatabaseGenerated(System.ComponentModel.DataAnnotations.DatabaseGeneratedOption.Computed)]    
+        // added by algol                
         public DbSet<RatingsModel> Ratings { get; set; }
-        public DbSet<SlideModel> Slides { get; set; }        
+        public DbSet<SlideModel> Slides { get; set; }
     }
 }

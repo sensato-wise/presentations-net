@@ -21,8 +21,8 @@ window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1
         <th>Description</th>
         <th>Tags</th>
         <th>Created By</th>
-		@if(Request.IsAuthenticated) {
-			<th>Rating</th>
+		<th>Rating</th>
+		@if(Request.IsAuthenticated) {		
 			<th></th>
 			<th>Vote</th>
 		}
@@ -43,9 +43,9 @@ window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1
             @Html.DisplayFor(modelItem => item.UserName)
         </td>
 		<td>
-		@if (item.AverageRating!=null){
+		@if (@item.IsRatedByOne){
 			<div class="StaticRating" >
-				<input type="hidden" name="val" value=@item.AverageRating />
+				<input type="hidden" name="val" value="@item.AverageRating" />
 			</div>
 		}
 		</td>
@@ -53,23 +53,37 @@ window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1
                 <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.PresentationId })
 				</td>
-				<td>	
-					<div class="rating" id="@item.PresentationId" >
-						<input class="rateValue" name="val" value="1" />
-					</div>				
-					<script>
-					$('#@item.PresentationId').filter('div.rating').rating({					
-						fx: 'full',
-						image: '../Content/ratings/images/stars.png',
-						loader: '../Content/ratings/images/ajax-loader.gif',					
-						    click: function (event, ui) {							
-			                $.post("/Search/Vote",
-							{ UserId: "@item.UserId", PresentationId: "@item.PresentationId",
-							Rating: $('#@item.PresentationId').children().children().filter('.vote-success').text() },
-							function () {});}
-						});								
-					</script>				
-				</td>	 
+				<td>						
+					@if(@item.IsRatedByUser){
+							<div class="rating" id="@item.PresentationId" >
+								<input type="hidden" class="rateValue" name="val" value="@item.UserRate" />
+							</div>	
+							<script>
+								$('#@item.PresentationId').filter('div.rating').rating({					
+									fx: 'full',
+									readOnly:true,
+									image: '../Content/ratings/images/stars.png'												    
+								});								
+							</script>	
+						} else
+						{
+							<div class="rating" id="@item.PresentationId" >
+								<input class="rateValue" name="val" value="0" />
+							</div>	
+							<script>
+								$('#@item.PresentationId').filter('div.rating').rating({					
+									fx: 'full',						
+									image: '../Content/ratings/images/stars.png',
+									loader: '../Content/ratings/images/ajax-loader.gif',					
+									click: function (event, ui) {							
+									$.post("/Search/Vote",
+										{ UserName: "@User.Identity.Name", PresentationId: "@item.PresentationId",
+										Rating: $('#@item.PresentationId').children().children().filter('.vote-success').text() },
+										function () {});}
+									});						
+							</script>
+						}
+				</td>
 			}           	
     </tr>
 }

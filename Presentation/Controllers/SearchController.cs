@@ -35,17 +35,36 @@ namespace Presentation.Controllers
             //var repository = new PresentationRepository();
             //return View(repository.GetAllPresentations());
             var presentations = repository.GetPresentations(searchString);
+            Guid currentUser = new Guid();
+            if (User.Identity.Name != "")
+            {
+                currentUser = currentUser = repository.GetUserGUID(User.Identity.Name);                                        
+            } 
             foreach (var presentationModel in presentations)
             {
                 presentationModel.UserName = repository.GetUserNameById(presentationModel.UserId);
+                
+                presentationModel.AverageRating = repository.GetAverageRating(presentationModel.PresentationId);
+                presentationModel.IsRatedByOne = presentationModel.AverageRating != null;
+                if (User.Identity.Name != "")
+                {
+                    presentationModel.IsRatedByUser = repository.IsRatedByUserId(presentationModel.PresentationId, currentUser);
+                    presentationModel.UserRate = repository.GetUserRating(presentationModel.PresentationId, currentUser);
+                } else
+                {
+                    presentationModel.IsRatedByUser = false;
+                    presentationModel.UserRate = 0;
+                }
             }
             return View(presentations);            
         }
 
         [HttpPost]
-        public ActionResult Vote(Guid UserId, int PresentationId, string Rating)
+        public ActionResult Vote(string UserName, int PresentationId, string Rating)
         {
-            repository.AddNewVote(UserId, PresentationId, Int32.Parse(Rating.Remove(0, 13)));              
+            var UserId = repository.GetUserGUID(UserName);
+            repository.AddNewVote(UserId, PresentationId, Int32.Parse(Rating.Remove(0, 13)));
+            repository.Save();
             return null;
         }
     }

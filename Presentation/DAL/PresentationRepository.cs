@@ -46,23 +46,44 @@ namespace Presentation.DAL
             return new PresentationModel();
         }
 
-        public void AddNewVote(Guid UserId, int PresentationId, float Rating)
+        public void AddNewVote(Guid UserId, int PresentId, int Rating)
         {
             var rating = new RatingsModel();
-            rating.PresentationId = PresentationId;
+            rating.PresentId = PresentId;
             rating.UserId = UserId;
-            rating.RatingValue = Rating;
-            dbRatings.Add(rating);
-            context.Entry(rating).State = EntityState.Modified;            
-            var presentation = GetPresentation(PresentationId);
-            var user = context.Users.Find(UserId);
-            presentation.Ratings.Add(rating);
-            context.Entry(presentation).State = EntityState.Modified;
-            user.Ratings.Add(rating);
-            context.Entry(user).State = EntityState.Modified;
-            
+            rating.RatingValue = Rating;            
+            context.Entry(rating).State = EntityState.Modified;
+            dbRatings.Add(rating);                                             
+        }
+        public string GetAverageRating(int PresId)
+        {
+            var rates = context.Ratings.Where(i => i.PresentId == PresId).ToList();
+            if (rates.Count == 0) return null;
+            else
+            {
+                double av = 0;
+                foreach (var r in rates)
+                {
+                    av += (double)r.RatingValue;
+                }
+                return ((int)(av / rates.Count)).ToString();
+            }
+        }
+        public bool IsRatedByUserId(int PresentationId, Guid UserId)
+        {
+            var rateModel = context.Ratings.Where(i => i.PresentId == PresentationId)
+                                            .Where(j => j.UserId == UserId).FirstOrDefault();
+            if (rateModel == null) return false;
+            else return true;
         }
 
+        public int GetUserRating(int PresentationId, Guid UserId)
+        {
+            var rateModel = context.Ratings.Where(i => i.PresentId == PresentationId)
+                                .Where(j => j.UserId == UserId).FirstOrDefault();
+            if (rateModel == null) return -1;            
+            return rateModel.RatingValue;
+        }
 
         public void DeletePresentation(int id)
         {
@@ -115,7 +136,7 @@ namespace Presentation.DAL
         private bool AddNewTag(string tagName, out int tagId)
         {
             Tag tag = new Tag();
-            tag.Name = tagName;
+            tag.Name = tagName;            
             try
             {
                 context.Tags.Add(tag);
