@@ -15,7 +15,7 @@ namespace Presentation.Controllers
     {
 
         private IPresentationRepository repository;
-        private ITagsRepository tagRepository;
+        private ITagsRepository tagRepository;        
 
         public PresentationController()
         {

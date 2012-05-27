@@ -71,14 +71,21 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminController.Test.cs" />
+    <Compile Include="HomeController.Test.cs" />
     <Compile Include="PresentationRepository.Test.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchController.Test.cs" />
+    <Compile Include="UserController.Test.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Presentation\Presentation.csproj">
       <Project>{B62F2D4F-E9A1-44D4-851B-CB0ED025B50B}</Project>
       <Name>Presentation</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Shadow Include="Тестовые ссылки\Presentation.accessor" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

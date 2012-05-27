@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Presentation.Models;
 using Presentation.Model;
 using System.Web.Security;
+using Presentation.DAL;
 
 
 namespace Presentation.Controllers
@@ -13,7 +14,7 @@ namespace Presentation.Controllers
     public class HomeController : Controller
     {
         private UserContext db = new UserContext();
-
+           
         public ActionResult Index()
         {
             ViewBag.Message = "Welcome to Presentations-net!";
@@ -32,6 +33,6 @@ namespace Presentation.Controllers
         public ActionResult About()
         {
             return View();
-        }
+        }         
     }
 }

@@ -10,11 +10,11 @@ namespace Presentation.Controllers
 {
     public class SearchController : Controller
     {
-        private IPresentationRepository repository;
+        private IPresentationRepository repository;        
 
         public SearchController()
         {
-            repository = new PresentationRepository();
+            repository = new PresentationRepository();            
         }
         
         public ActionResult Index()

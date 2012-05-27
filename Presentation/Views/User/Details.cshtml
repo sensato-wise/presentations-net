@@ -20,9 +20,14 @@
 	<td>@Html.DisplayFor(model => model.UserDetails.CreateDate) </td>
 </tr>
 <tr>
+
 <td>
     @Html.ActionLink("Edit", "Edit", new { Name=Model.UserName, ViewType="One" }) 
 </td><td></td>
+<tr>
+<td>@Html.ActionLink("Change Color Theme", "ChangeTheme", new { Name=Model.UserName })
+</td><td></td>
+</tr>
 </tr>
 <tr>
 <td>

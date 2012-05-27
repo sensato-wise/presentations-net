@@ -20,13 +20,12 @@ namespace Presentation.Models
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         [Column("UserIntId")]
         public int UserIntId { get; set; }
-
-        //[DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        //[Column("ThemeId")]
-        //public int ThemeId { get; set; }        
+        
+        [Column("ThemeId")]
+        public int ThemeId { get; set; }        
         
         //[ForeignKey("UserId")]
-        //public virtual UserDetails UserDetails { get; set; }        
+        //public virtual UserDetails UserDetails { get; set; }
     }
     
     [DisplayColumn("UserId")]    

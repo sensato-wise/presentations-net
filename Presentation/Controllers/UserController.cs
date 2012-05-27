@@ -10,13 +10,21 @@ using Presentation.Model;
 using System.Web.Security;
 using System.Collections;
 using System.Web.Routing;
+using Presentation.DAL;
+using DynamicHeader;
 
 namespace Presentation.Controllers
 { 
     public class UserController : Controller
     {
-        private UserContext db = new UserContext();        
-        
+        private UserContext db = new UserContext();
+        private IThemeRepository themeRepository;
+
+        public UserController()
+        {
+            themeRepository = new ThemeRepository();
+        }
+
         // GET: /User/
         [Authorize(Roles = "Admin")]
         public ViewResult Index()
@@ -24,7 +32,7 @@ namespace Presentation.Controllers
             var users = Membership.GetAllUsers();
             return View(users);         
         }
-        
+
         // GET: /User/Details/5
 
         public ActionResult Details(string Name, string ViewType )
@@ -198,6 +206,22 @@ namespace Presentation.Controllers
             Roles.RemoveUserFromRoles(model.UserName, roles);
             Roles.AddUserToRole(model.UserName, newRole);
             return RedirectToAction("ChangeRoleSuccess");
+        }
+
+        public ActionResult ChangeTheme(string Name)
+        {
+            ViewData["Theme"] = themeRepository.GetThemeByName(Name).ToString();            
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangeTheme(string theme, string Name)
+        {
+            themeRepository.SetThemeByName(Name, Int16.Parse(theme));                        
+            RouteValueDictionary routeValues = new RouteValueDictionary();
+            routeValues.Add("Name", Name); 
+            routeValues.Add("ViewType", "One");             
+            return RedirectToAction("Details",routeValues);
         }
 
         public ActionResult ChangeRoleSuccess()
