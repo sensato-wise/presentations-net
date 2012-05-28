@@ -25,20 +25,14 @@
     });
 </script>
 
-
+<button onclick="tryUpdate()" style="margin-left:80px; margin-top:40px" runat="server">Save Presentation</button>
 <div style="height:800px; margin:0px;padding:0px;">
+    <div id="slideshow-carousel">				
+			      <ul id="carousel" class="jcarousel jcarousel-skin-tango">
+			      </ul>
+    </div>
+    <div id="PaintWebTarget" style="position:relative; float:left; margin-left:100px"></div>
+    <div class="clear"></div>
 
-<div id="slideshow-carousel">				
-			  <ul id="carousel" class="jcarousel jcarousel-skin-tango">
-			  </ul>
-</div>
-
-
-
-
-<div id="PaintWebTarget" style="position:relative; float:left; margin-left:100px"></div>
-<div class="clear"></div>
-
-<button onclick="tryUpdate()" runat="server">Save Presentation</button>
-<input id="presentationId" type="hidden" value = "@Request.Params["id"]" />
+    <input id="presentationId" type="hidden" value = "@Request.Params["id"]" />
 </div>

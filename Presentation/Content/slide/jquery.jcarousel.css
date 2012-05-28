@@ -59,6 +59,8 @@ img {
 	width:206px;
 	position:relative;
 	float:left;
+	margin-left:40px;
+	margin-top:40px;
 }
 
 #slideshow-carousel ul {

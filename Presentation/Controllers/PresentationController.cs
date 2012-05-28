@@ -251,9 +251,10 @@ namespace Presentation.Controllers
         }
 
 
-        public ActionResult SlideShow()
+        public ActionResult SlideShow(int id)
         {
-            return View();
+            var presentation = repository.GetPresentation(id);
+            return View(presentation);
         }
 
         #endregion // work with slides

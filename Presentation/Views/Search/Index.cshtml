@@ -22,6 +22,7 @@ window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1
         <th>Tags</th>
         <th>Created By</th>
 		<th>Rating</th>
+        <th>Show</th>
 		@if(Request.IsAuthenticated) {		
 			<th></th>
 			<th>Vote</th>
@@ -49,11 +50,12 @@ window.jQuery || document.write('<script type="text/javascript" src="js/jquery-1
 			</div>
 		}
 		</td>
-            @if(Request.IsAuthenticated) {
-                <td>
+        <td>
                 <a href= @Href("/Presentation/SlideShow", new { id = item.PresentationId })>Show</a>
 				</td>
-				<td>						
+            @if(Request.IsAuthenticated) {
+                
+				<td style="width:200px">						
 					@if(@item.IsRatedByUser){
 							<div class="rating" id="@item.PresentationId" >
 								<input type="hidden" class="rateValue" name="val" value="@item.UserRate" />

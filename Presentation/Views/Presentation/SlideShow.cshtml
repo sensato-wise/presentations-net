@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Presentation.Models.PresentationModel
+@{
     ViewBag.Title = "SlideShow";
 }
 
@@ -77,10 +78,10 @@
 
         function createLoadedSlides(data) {
             for (var i = 0; i < data.length; ++i) {
-                createNewSlide(data[i]);
+                createNewSlide(data[i], i);
             }
         }
-        function createNewSlide(data) {
+        function createNewSlide(data, number) {
             var li = document.createElement("li");
             var link = document.createElement("a");
             link.setAttribute("href", "#random");
@@ -89,8 +90,15 @@
             img.setAttribute("class", "random");
             link.appendChild(img);
             li.appendChild(link);
+            var div = document.createElement("div");
+            div.setAttribute("class", "label_text");
+            var p = document.createElement("p");
+            p.textContent = "Slide " + (number+1);
+            div.appendChild(p);
+            li.appendChild(div);
             var list = document.getElementById("list");
             list.appendChild(li);
+            
         }
 
 
@@ -98,14 +106,14 @@
 	</script>
 
 
-<h2>SlideShow</h2>
+<h2><p style="padding-left:200px">SlideShow: @Model.Name </p></h2>
 
 
-<div class="border_box">
+<div  class="border_box"  align="center">
 	<div class="box_skitter box_skitter_large">
 		<ul id="list">
-			<li><a href="#cube"><img src="../../Content/slideShow/images/001.jpg" class="cube" /></a><div class="label_text"><p>cube</p></div></li>
-			<li><a href="#cubeRandom"><img  src="../../Content/slideShow/images/002.jpg" class="cubeRandom" /></a><div class="label_text"><p>cubeRandom</p></div></li>
+@*			<li><a href="#cube"><img src="../../Content/slideShow/images/001.jpg" class="cube" /></a><div class="label_text"><p>cube</p></div></li>
+			<li><a href="#cubeRandom"><img  src="../../Content/slideShow/images/002.jpg" class="cubeRandom" /></a><div class="label_text"><p>cubeRandom</p></div></li>*@
 			
 		</ul>
 	</div>

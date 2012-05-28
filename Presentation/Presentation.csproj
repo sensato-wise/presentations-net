@@ -107,8 +107,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\336994.JPG" />
-    <Content Include="Content\486984.JPG" />
     <Content Include="Content\demo\slideshow.css" />
     <Content Include="Content\demo\styles.css" />
     <Content Include="Content\ratings\images\ajax-loader.gif" />
@@ -131,6 +129,7 @@
     <Content Include="Content\slideShow\styles.css" />
     <Content Include="Content\slide\images\arrow_white.png" />
     <Content Include="Content\slide\images\background.jpg" />
+    <Content Include="Content\slide\images\car1.jpg" />
     <Content Include="Content\slide\images\new_slide.gif" />
     <Content Include="Content\slide\images\next-vertical.png" />
     <Content Include="Content\slide\images\prev-vertical.png" />

@@ -81,7 +81,7 @@
    * @type String
    * @default "100%"
    */
-  "viewportWidth": "680px",
+  "viewportWidth": "800px",
 
   /**
    * The image viewport height. Make sure the value is a CSS length, like "50%", 
@@ -92,7 +92,7 @@
    * @type String
    * @default "400px"
    */
-  "viewportHeight": "310px",
+  "viewportHeight": "350px",
 
   /**
    * Image save quality for the JPEG format.

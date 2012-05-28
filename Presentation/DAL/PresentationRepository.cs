@@ -94,6 +94,8 @@ namespace Presentation.DAL
 
         public void UpdatePresentation(Models.PresentationModel presentation)
         {
+            if (presentation.Tags != null)
+                ParseTags(presentation);
             context.Entry(presentation).State = EntityState.Modified;
         }
 
